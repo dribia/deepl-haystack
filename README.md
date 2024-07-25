@@ -51,5 +51,5 @@ make format
 
 ## License
 
-`google-vertex-haystack` is distributed under the terms of the
+`deepl-haystack` is distributed under the terms of the
 [MIT](https://opensource.org/license/mit) license.
