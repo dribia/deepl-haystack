@@ -1,0 +1,24 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.6.0
+  hooks:
+  - id: check-yaml
+  - id: check-toml
+  - id: check-added-large-files
+    args:
+    - --maxkb=500
+  - id: end-of-file-fixer
+  - id: trailing-whitespace
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.5.4
+  hooks:
+  - id: ruff
+    types_or: [ python, pyi ]
+    args:
+    - --fix
+  - id: ruff-format
+    types_or: [ python, pyi ]
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v1.11.0
+  hooks:
+  - id: mypy
