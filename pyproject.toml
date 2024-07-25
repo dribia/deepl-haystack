@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "deepl-haystack"
-version = "0.1.0"
+version = "0.1.1"
 description = "Haystack integration with DeepL translation services provider."
 authors = ["Albert Iribarne <iribarne@dribia.com>"]
 maintainers = ["Albert Iribarne <iribarne@dribia.com>", "Dribia Data Research <code@dribia.com>"]
