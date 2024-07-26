@@ -154,13 +154,16 @@ class TestDeepLDocumentTranslator:
             target_lang=target_lang,
             formality=Formality(formality),
         )
-        assert isinstance(response, list)
+        assert isinstance(response, dict)
         assert len(response) == 1
-        assert response[0].content == text
-        assert "source_lang" in response[0].meta
-        assert "language" in response[0].meta
-        assert response[0].meta["source_lang"] == DEFAULT_SOURCE_LANG
-        assert response[0].meta["language"] == "ES"
+        assert "documents" in response
+        assert isinstance(response["documents"], list)
+        assert len(response["documents"]) == 1
+        assert response["documents"][0].content == text
+        assert "source_lang" in response["documents"][0].meta
+        assert "language" in response["documents"][0].meta
+        assert response["documents"][0].meta["source_lang"] == DEFAULT_SOURCE_LANG
+        assert response["documents"][0].meta["language"] == "ES"
 
     def test_run_empty_list(self, monkeypatch, mock_translation):
         """Test the run method of the DeepLDocumentTranslator class.
@@ -185,8 +188,11 @@ class TestDeepLDocumentTranslator:
             target_lang=target_lang,
             formality=Formality(formality),
         )
-        assert isinstance(response, list)
-        assert len(response) == 0
+        assert isinstance(response, dict)
+        assert "documents" in response
+        assert len(response) == 1
+        assert isinstance(response["documents"], list)
+        assert len(response["documents"]) == 0
 
     @pytest.mark.parametrize("wrong_input", [1, "string", object, object()])
     def test_run_wrong_input(self, monkeypatch, wrong_input: Any):
@@ -213,12 +219,12 @@ class TestDeepLDocumentTranslator:
         component = DeepLDocumentTranslator(target_lang="ES")
         meta = {"meta_1": "foo", "meta_2": "bar"}
         response = component.run([Document(content=text, meta=meta)])
-        assert "source_lang" in response[0].meta
-        assert "language" in response[0].meta
-        assert "meta_1" in response[0].meta
-        assert "meta_2" in response[0].meta
-        assert response[0].meta["meta_1"] == "foo"
-        assert response[0].meta["meta_2"] == "bar"
+        assert "source_lang" in response["documents"][0].meta
+        assert "language" in response["documents"][0].meta
+        assert "meta_1" in response["documents"][0].meta
+        assert "meta_2" in response["documents"][0].meta
+        assert response["documents"][0].meta["meta_1"] == "foo"
+        assert response["documents"][0].meta["meta_2"] == "bar"
 
     @pytest.mark.skipif(
         not os.environ.get("DEEPL_API_KEY", None),
@@ -230,10 +236,10 @@ class TestDeepLDocumentTranslator:
             source_lang="EN",
             target_lang="ES",
         )
-        results = component.run([Document(content="What's the capital of France?")])
-        assert results[0].content == "¿Cuál es la capital de Francia?"
-        assert results[0].meta["source_lang"] == "EN"
-        assert results[0].meta["language"] == "ES"
+        response = component.run([Document(content="What's the capital of France?")])
+        assert response["documents"][0].content == "¿Cuál es la capital de Francia?"
+        assert response["documents"][0].meta["source_lang"] == "EN"
+        assert response["documents"][0].meta["language"] == "ES"
 
     @pytest.mark.skipif(
         not os.environ.get("DEEPL_API_KEY", None),
