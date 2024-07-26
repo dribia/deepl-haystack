@@ -1,9 +1,10 @@
 """Test cases for DeepL translator components."""
 
+import os
 from typing import Any
 
 import pytest
-from deepl import Formality, Translator
+from deepl import DeepLException, Formality, Translator
 from haystack.utils import Secret
 
 from deepl_haystack import DeepLTextTranslator
@@ -13,6 +14,11 @@ from .conftest import DEFAULT_SOURCE_LANG
 
 class TestDeepLTextTranslator:
     """Test cases for the DeepLTextTranslator class."""
+
+    _MISSING_API_KEY_REASON: str = (
+        "Export an env var called DEEPL_API_KEY containing "
+        "the DeepL API key to run this test."
+    )
 
     def test_init_default(self, monkeypatch):
         """Default initialization of the DeepLTextTranslator class."""
@@ -201,3 +207,42 @@ class TestDeepLTextTranslator:
             ),
         ):
             component.run(wrong_input)
+
+    @pytest.mark.skipif(
+        not os.environ.get("DEEPL_API_KEY", None),
+        reason=_MISSING_API_KEY_REASON,
+    )
+    @pytest.mark.integration
+    def test_live_run(self):
+        component = DeepLTextTranslator(
+            source_lang="EN",
+            target_lang="ES",
+        )
+        results = component.run("What's the capital of France?")
+        assert results["translation"] == "¿Cuál es la capital de Francia?"
+        assert results["meta"]["source_lang"] == "EN"
+        assert results["meta"]["target_lang"] == "ES"
+
+    @pytest.mark.skipif(
+        not os.environ.get("DEEPL_API_KEY", None),
+        reason=_MISSING_API_KEY_REASON,
+    )
+    @pytest.mark.integration
+    def test_live_run_wrong_source_language(self):
+        component = DeepLTextTranslator(source_lang="something-wrong")
+        with pytest.raises(
+            DeepLException, match=r".* Value for 'source_lang' not supported."
+        ):
+            component.run("Whatever")
+
+    @pytest.mark.skipif(
+        not os.environ.get("DEEPL_API_KEY", None),
+        reason=_MISSING_API_KEY_REASON,
+    )
+    @pytest.mark.integration
+    def test_live_run_wrong_target_language(self):
+        component = DeepLTextTranslator(target_lang="something-wrong")
+        with pytest.raises(
+            DeepLException, match=r".* Value for 'target_lang' not supported."
+        ):
+            component.run("Whatever")

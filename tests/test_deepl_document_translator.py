@@ -1,9 +1,10 @@
 """Test cases for DeepL translator components."""
 
+import os
 from typing import Any
 
 import pytest
-from deepl import Formality, Translator
+from deepl import DeepLException, Formality, Translator
 from haystack import Document
 from haystack.utils import Secret
 
@@ -14,6 +15,11 @@ from .conftest import DEFAULT_SOURCE_LANG
 
 class TestDeepLDocumentTranslator:
     """Test cases for the DeepLDocumentTranslator class."""
+
+    _MISSING_API_KEY_REASON: str = (
+        "Export an env var called DEEPL_API_KEY containing "
+        "the DeepL API key to run this test."
+    )
 
     def test_init_default(self, monkeypatch):
         """Default initialization of the DeepLDocumentTranslator class."""
@@ -213,3 +219,42 @@ class TestDeepLDocumentTranslator:
         assert "meta_2" in response[0].meta
         assert response[0].meta["meta_1"] == "foo"
         assert response[0].meta["meta_2"] == "bar"
+
+    @pytest.mark.skipif(
+        not os.environ.get("DEEPL_API_KEY", None),
+        reason=_MISSING_API_KEY_REASON,
+    )
+    @pytest.mark.integration
+    def test_live_run(self):
+        component = DeepLDocumentTranslator(
+            source_lang="EN",
+            target_lang="ES",
+        )
+        results = component.run([Document(content="What's the capital of France?")])
+        assert results[0].content == "¿Cuál es la capital de Francia?"
+        assert results[0].meta["source_lang"] == "EN"
+        assert results[0].meta["target_lang"] == "ES"
+
+    @pytest.mark.skipif(
+        not os.environ.get("DEEPL_API_KEY", None),
+        reason=_MISSING_API_KEY_REASON,
+    )
+    @pytest.mark.integration
+    def test_live_run_wrong_source_language(self):
+        component = DeepLDocumentTranslator(source_lang="something-wrong")
+        with pytest.raises(
+            DeepLException, match=r".* Value for 'source_lang' not supported."
+        ):
+            component.run([Document(content="Whatever")])
+
+    @pytest.mark.skipif(
+        not os.environ.get("DEEPL_API_KEY", None),
+        reason=_MISSING_API_KEY_REASON,
+    )
+    @pytest.mark.integration
+    def test_live_run_wrong_target_language(self):
+        component = DeepLDocumentTranslator(target_lang="something-wrong")
+        with pytest.raises(
+            DeepLException, match=r".* Value for 'target_lang' not supported."
+        ):
+            component.run([Document(content="Whatever")])
