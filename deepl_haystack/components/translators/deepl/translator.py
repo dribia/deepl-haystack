@@ -163,17 +163,19 @@ class DeepLDocumentTranslator:
         assert isinstance(translations, list)
         for _translation in translations:
             pass
-        return [
-            Document(
-                content=translation.text,
-                meta=dict(
-                    **document.meta,
-                    source_lang=translation.detected_source_lang,
-                    language=self.target_lang,
-                ),
-            )
-            for document, translation in zip(documents, translations)
-        ]
+        return {
+            "documents": [
+                Document(
+                    content=translation.text,
+                    meta=dict(
+                        **document.meta,
+                        source_lang=translation.detected_source_lang,
+                        language=self.target_lang,
+                    ),
+                )
+                for document, translation in zip(documents, translations)
+            ]
+        }
 
     def to_dict(self) -> Dict[str, Any]:
         """Serializes the component to a dictionary.
