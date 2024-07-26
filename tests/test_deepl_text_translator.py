@@ -221,7 +221,7 @@ class TestDeepLTextTranslator:
         results = component.run("What's the capital of France?")
         assert results["translation"] == "¿Cuál es la capital de Francia?"
         assert results["meta"]["source_lang"] == "EN"
-        assert results["meta"]["target_lang"] == "ES"
+        assert results["meta"]["language"] == "ES"
 
     @pytest.mark.skipif(
         not os.environ.get("DEEPL_API_KEY", None),
