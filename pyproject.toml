@@ -90,7 +90,7 @@ markers = [
 ]
 
 [tool.coverage.run]
-source = ["deepl_haystack", "tests"]
+source = ["deepl_haystack"]
 branch = true
 
 [tool.coverage.report]
