@@ -1,6 +1,6 @@
 """DeepL Haystack integration."""
 
-from .components.translators.deepl.translator import (
+from .components import (
     DeepLDocumentTranslator,
     DeepLTextTranslator,
 )
