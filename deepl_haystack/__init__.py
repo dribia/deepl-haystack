@@ -2,10 +2,7 @@
 
 from importlib.metadata import PackageNotFoundError, version
 
-from .components.translators.deepl.translator import (
-    DeepLDocumentTranslator,
-    DeepLTextTranslator,
-)
+from .components import DeepLDocumentTranslator, DeepLTextTranslator
 
 try:
     __version__ = version(__name__)

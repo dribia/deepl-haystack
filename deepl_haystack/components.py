@@ -1,4 +1,4 @@
-"""DeepL translator component."""
+"""DeepL translator components."""
 
 from typing import Any, Dict, List, Optional, Union
 

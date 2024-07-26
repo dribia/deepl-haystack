@@ -58,7 +58,7 @@ class TestDeepLDocumentTranslator:
         component = DeepLDocumentTranslator()
         data = component.to_dict()
         assert data == {
-            "type": "deepl_haystack.components.translators.deepl.translator.DeepLDocumentTranslator",
+            "type": "deepl_haystack.components.DeepLDocumentTranslator",
             "init_parameters": {
                 "api_key": {
                     "env_vars": ["DEEPL_API_KEY"],
@@ -81,7 +81,7 @@ class TestDeepLDocumentTranslator:
         )
         data = component.to_dict()
         assert data == {
-            "type": "deepl_haystack.components.translators.deepl.translator.DeepLDocumentTranslator",
+            "type": "deepl_haystack.components.DeepLDocumentTranslator",
             "init_parameters": {
                 "api_key": {"env_vars": ["ENV_VAR"], "strict": True, "type": "env_var"},
                 "source_lang": "DE",
@@ -93,7 +93,7 @@ class TestDeepLDocumentTranslator:
     def test_from_dict(self, monkeypatch):
         monkeypatch.setenv("DEEPL_API_KEY", "test-api-key")
         data = {
-            "type": "deepl_haystack.components.translators.deepl.translator.DeepLDocumentTranslator",
+            "type": "deepl_haystack.components.DeepLDocumentTranslator",
             "init_parameters": {
                 "api_key": {
                     "env_vars": ["DEEPL_API_KEY"],
@@ -114,7 +114,7 @@ class TestDeepLDocumentTranslator:
     def test_from_dict_fail_wo_env_var(self, monkeypatch):
         monkeypatch.delenv("DEEPL_API_KEY", raising=False)
         data = {
-            "type": "deepl_haystack.components.translators.deepl.translator.DeepLDocumentTranslator",
+            "type": "deepl_haystack.components.DeepLDocumentTranslator",
             "init_parameters": {
                 "api_key": {
                     "env_vars": ["DEEPL_API_KEY"],
