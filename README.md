@@ -30,12 +30,11 @@ You can get one by signing up at the [DeepL API website](https://www.deepl.com/p
 
 ```python
 from haystack.utils import Secret
+
 from deepl_haystack import DeepLTextTranslator
 
 translator = DeepLTextTranslator(
-  api_key=Secret.from_token("your_api_key_here"),
-  source_lang="EN",
-  target_lang="ES"
+    api_key=Secret.from_token("your_api_key_here"), source_lang="EN", target_lang="ES"
 )
 
 translated_text = translator.run("Hello, world!")
@@ -48,27 +47,61 @@ print(translated_text)
 ```python
 from haystack.dataclasses import Document
 from haystack.utils import Secret
+
 from deepl_haystack import DeepLDocumentTranslator
 
 translator = DeepLDocumentTranslator(
-  api_key=Secret.from_token("your_api_key_here"),
-  source_lang="EN",
-  target_lang="ES"
+    api_key=Secret.from_token("your_api_key_here"), source_lang="EN", target_lang="ES"
 )
 
 documents_to_translate = [
-  Document(content="Hello, world!"),
-  Document(content="Goodbye, Joe!", meta={"name": "Joe"})
+    Document(content="Hello, world!"),
+    Document(content="Goodbye, Joe!", meta={"name": "Joe"}),
 ]
 
 translated_documents = translator.run(documents_to_translate)
-print(
-  "\n".join(
-    [f"{doc.content}, {doc.meta}" for doc in translated_documents]
-  )
-)
+print("\n".join([f"{doc.content}, {doc.meta}" for doc in translated_documents]))
 # ¡Hola, mundo!, {'source_lang': 'EN', 'target_lang': 'ES'}
 # ¡Adiós, Joe!, {'name': 'Joe', 'source_lang': 'EN', 'target_lang': 'ES'}
+```
+
+### Haystack Pipeline Integration
+
+> [!TIP]
+> To run this example, you'll need to have the `MarkdownToDocument` requirements installed:
+> ```shell
+> pip install markdown-it-py, mdit-plain
+> ```
+
+```python
+from haystack import Pipeline
+from haystack.components.converters import MarkdownToDocument
+from haystack.components.writers import DocumentWriter
+from haystack.dataclasses.byte_stream import ByteStream
+from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack.utils import Secret
+
+from deepl_haystack import DeepLDocumentTranslator
+
+document_store = InMemoryDocumentStore()
+
+pipeline = Pipeline()
+pipeline.add_component(instance=MarkdownToDocument(), name="converter")
+pipeline.add_component(
+    instance=DeepLDocumentTranslator(
+        api_key=Secret.from_token("f9b24fba-2267-463a-97b1-6f211ad6197a:fx"),
+        target_lang="ES",
+    ),
+    name="translator",
+)
+pipeline.add_component(
+    instance=DocumentWriter(document_store=document_store), name="document_store"
+)
+pipeline.connect("converter", "translator")
+pipeline.connect("translator", "document_store")
+pipeline.run({"converter": {"sources": [ByteStream.from_string("# Hello world!")]}})
+print(document_store.filter_documents())
+# [Document(id=..., content: '¡Hola, mundo!', meta: {'source_lang': 'EN', 'language': 'ES'})]
 ```
 
 ## Contributing
