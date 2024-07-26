@@ -7,17 +7,68 @@ DeepL Haystack Integration
 | Package | [![PyPI](https://img.shields.io/pypi/v/deepl-haystack)](https://pypi.org/project/deepl-haystack/) ![PyPI - Downloads](https://img.shields.io/pypi/dm/deepl-haystack?color=blue&logo=pypi&logoColor=gold) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/deepl-haystack?logo=python&logoColor=gold) [![GitHub](https://img.shields.io/github/license/dribia/deepl-haystack?color=blue)](LICENSE)                                                                                                                                                                                |
 ---
 
-**Table of Contents**
-
-- [deepl-haystack](#deepl-haystack-integration)
-  - [Installation](#installation)
-  - [Contributing](#contributing)
-  - [License](#license)
-
 ## Installation
+
+This project resides in the Python Package Index (PyPI), so it can easily be installed with `pip`:
 
 ```console
 pip install deepl-haystack
+```
+
+## Usage
+
+The DeepL Haystack integration provides two Haystack components: `DeepLTextTranslator`
+and `DeepLDocumentTranslator`. These components can be used to translate text and documents,
+respectively, using the DeepL API.
+
+## Examples
+
+To run these examples you'll need a working DeepL API key.
+You can get one by signing up at the [DeepL API website](https://www.deepl.com/pro#developer).
+
+### Standalone Text Translation
+
+```python
+from haystack.utils import Secret
+from deepl_haystack import DeepLTextTranslator
+
+translator = DeepLTextTranslator(
+  api_key=Secret.from_token("your_api_key_here"),
+  source_lang="EN",
+  target_lang="ES"
+)
+
+translated_text = translator.run("Hello, world!")
+print(translated_text)
+# {'translation': '¡Hola, mundo!', 'meta': {'source_lang': 'EN', 'target_lang': 'ES'}}
+```
+
+### Standalone Document Translation
+
+```python
+from haystack.dataclasses import Document
+from haystack.utils import Secret
+from deepl_haystack import DeepLDocumentTranslator
+
+translator = DeepLDocumentTranslator(
+  api_key=Secret.from_token("your_api_key_here"),
+  source_lang="EN",
+  target_lang="ES"
+)
+
+documents_to_translate = [
+  Document(content="Hello, world!"),
+  Document(content="Goodbye, Joe!", meta={"name": "Joe"})
+]
+
+translated_documents = translator.run(documents_to_translate)
+print(
+  "\n".join(
+    [f"{doc.content}, {doc.meta}" for doc in translated_documents]
+  )
+)
+# ¡Hola, mundo!, {'source_lang': 'EN', 'target_lang': 'ES'}
+# ¡Adiós, Joe!, {'name': 'Joe', 'source_lang': 'EN', 'target_lang': 'ES'}
 ```
 
 ## Contributing
@@ -67,3 +118,4 @@ make test-integration
 
 `deepl-haystack` is distributed under the terms of the
 [MIT](https://opensource.org/license/mit) license.
+Check the [LICENSE](./LICENSE) file for further details.
