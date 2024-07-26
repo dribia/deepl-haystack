@@ -38,6 +38,8 @@ jobs:
         python-version: [ "3.11" ]
         os: [ ubuntu-latest ]
     runs-on: ubuntu-latest
+    env:
+      DEEPL_API_KEY: ${{ secrets.DEEPL_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: snok/install-poetry@v1
