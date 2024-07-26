@@ -154,9 +154,9 @@ class TestDeepLTextTranslator:
         assert response["translation"] == text
         assert "meta" in response
         assert "source_lang" in response["meta"]
-        assert "target_lang" in response["meta"]
+        assert "language" in response["meta"]
         assert response["meta"]["source_lang"] == DEFAULT_SOURCE_LANG
-        assert response["meta"]["target_lang"] == "ES"
+        assert response["meta"]["language"] == "ES"
 
     def test_run_with_source_lang(self, monkeypatch, mock_translation):
         """Test the run method of the DeepLTextTranslator class."""
@@ -181,8 +181,8 @@ class TestDeepLTextTranslator:
         assert isinstance(response, dict)
         assert "meta" in response
         assert "source_lang" in response["meta"]
-        assert "target_lang" in response["meta"]
-        assert response["meta"]["target_lang"] == "ES"
+        assert "language" in response["meta"]
+        assert response["meta"]["language"] == "ES"
 
     @pytest.mark.parametrize(
         "wrong_input", [1, ["one string", "other string"], object, object()]

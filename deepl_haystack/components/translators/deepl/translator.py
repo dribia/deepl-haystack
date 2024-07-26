@@ -69,7 +69,7 @@ class DeepLTextTranslator:
         assert isinstance(translation, TextResult)
         meta = {
             "source_lang": translation.detected_source_lang,
-            "target_lang": self.target_lang,
+            "language": self.target_lang,
         }
         return {"translation": translation.text, "meta": meta}
 
@@ -169,7 +169,7 @@ class DeepLDocumentTranslator:
                 meta=dict(
                     **document.meta,
                     source_lang=translation.detected_source_lang,
-                    target_lang=self.target_lang,
+                    language=self.target_lang,
                 ),
             )
             for document, translation in zip(documents, translations)
