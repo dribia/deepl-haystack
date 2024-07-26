@@ -31,13 +31,13 @@ With `poetry` installed, one can install the project dependencies with:
 poetry install
 ```
 
-Then, to run the tests:
+Then, to run the project unit tests:
 
 ```shell
-make test
+make test-unit
 ```
 
-To run the linters `ruff` and `mypy`:
+To run the linters (`ruff` and `mypy`):
 
 ```shell
 make lint
@@ -47,6 +47,20 @@ To apply all code formatting:
 
 ```shell
 make format
+```
+
+And finally, to run the project integration tests (which actually use the DeepL API),
+you should either have the `DEEPL_API_KEY` environment variable set,
+or create a `.env` file:
+
+```dotenv
+DEEPL_API_KEY=your_api_key_here
+```
+
+And run:
+
+```shell
+make test-integration
 ```
 
 ## License

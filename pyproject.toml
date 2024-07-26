@@ -23,6 +23,7 @@ keywords = ["haystack", "deepl", "translation", "nlp"]
 python = ">=3.9,<3.13"
 deepl = "^1.18.0"
 haystack-ai = "^2.3.0"
+pytest-dotenv = "^0.5.2"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.1"
@@ -84,10 +85,12 @@ addopts = "--verbose"
 filterwarnings = 'error'
 xfail_strict = true
 testpaths = ["tests"]
-markers = []
+markers = [
+  "integration: integration tests",
+]
 
 [tool.coverage.run]
-source = ["deepl_haystack", "tests"]
+source = ["deepl_haystack"]
 branch = true
 
 [tool.coverage.report]

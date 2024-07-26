@@ -18,7 +18,10 @@ lock:
 	poetry lock --no-update
 
 test:
-	poetry run pytest
-
-test-cov:
 	poetry run pytest --cov --cov-report=html --cov-report=xml
+
+test-unit:
+	poetry run pytest --cov --cov-report=html --cov-report=xml -m "not integration"
+
+test-integration:
+	poetry run pytest -m "integration"
