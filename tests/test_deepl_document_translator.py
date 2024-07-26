@@ -158,9 +158,9 @@ class TestDeepLDocumentTranslator:
         assert len(response) == 1
         assert response[0].content == text
         assert "source_lang" in response[0].meta
-        assert "target_lang" in response[0].meta
+        assert "language" in response[0].meta
         assert response[0].meta["source_lang"] == DEFAULT_SOURCE_LANG
-        assert response[0].meta["target_lang"] == "ES"
+        assert response[0].meta["language"] == "ES"
 
     def test_run_empty_list(self, monkeypatch, mock_translation):
         """Test the run method of the DeepLDocumentTranslator class.
@@ -214,7 +214,7 @@ class TestDeepLDocumentTranslator:
         meta = {"meta_1": "foo", "meta_2": "bar"}
         response = component.run([Document(content=text, meta=meta)])
         assert "source_lang" in response[0].meta
-        assert "target_lang" in response[0].meta
+        assert "language" in response[0].meta
         assert "meta_1" in response[0].meta
         assert "meta_2" in response[0].meta
         assert response[0].meta["meta_1"] == "foo"
@@ -233,7 +233,7 @@ class TestDeepLDocumentTranslator:
         results = component.run([Document(content="What's the capital of France?")])
         assert results[0].content == "¿Cuál es la capital de Francia?"
         assert results[0].meta["source_lang"] == "EN"
-        assert results[0].meta["target_lang"] == "ES"
+        assert results[0].meta["language"] == "ES"
 
     @pytest.mark.skipif(
         not os.environ.get("DEEPL_API_KEY", None),
