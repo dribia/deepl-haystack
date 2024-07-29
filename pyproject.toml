@@ -36,8 +36,6 @@ mypy = "1.11.0"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.7.1"
-markdown-it-py = "^3.0.0"
-mdit-plain = "^1.0.1"
 
 [tool.ruff]
 

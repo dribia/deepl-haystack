@@ -67,15 +67,9 @@ print("\n".join([f"{doc.content}, {doc.meta}" for doc in translated_documents]))
 
 ### Haystack Pipeline Integration
 
-> [!TIP]
-> To run this example, you'll need to have the `MarkdownToDocument` requirements installed:
-> ```shell
-> pip install markdown-it-py, mdit-plain
-> ```
-
 ```python
 from haystack import Pipeline
-from haystack.components.converters import MarkdownToDocument
+from haystack.components.converters import TextFileToDocument
 from haystack.components.writers import DocumentWriter
 from haystack.dataclasses.byte_stream import ByteStream
 from haystack.document_stores.in_memory import InMemoryDocumentStore
@@ -86,10 +80,10 @@ from deepl_haystack import DeepLDocumentTranslator
 document_store = InMemoryDocumentStore()
 
 pipeline = Pipeline()
-pipeline.add_component(instance=MarkdownToDocument(), name="converter")
+pipeline.add_component(instance=TextFileToDocument(), name="converter")
 pipeline.add_component(
     instance=DeepLDocumentTranslator(
-        api_key=Secret.from_token("f9b24fba-2267-463a-97b1-6f211ad6197a:fx"),
+        api_key=Secret.from_token("your_api_key_here"),
         target_lang="ES",
     ),
     name="translator",
@@ -99,7 +93,7 @@ pipeline.add_component(
 )
 pipeline.connect("converter", "translator")
 pipeline.connect("translator", "document_store")
-pipeline.run({"converter": {"sources": [ByteStream.from_string("# Hello world!")]}})
+pipeline.run({"converter": {"sources": [ByteStream.from_string("Hello world!")]}})
 print(document_store.filter_documents())
 # [Document(id=..., content: '¡Hola, mundo!', meta: {'source_lang': 'EN', 'language': 'ES'})]
 ```
