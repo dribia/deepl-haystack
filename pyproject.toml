@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "deepl-haystack"
-version = "0.2.1"
+version = "0.2.2"
 description = "Haystack integration with DeepL translation services provider."
 authors = ["Albert Iribarne <iribarne@dribia.com>"]
 maintainers = ["Albert Iribarne <iribarne@dribia.com>", "Dribia Data Research <code@dribia.com>"]
@@ -36,8 +36,6 @@ mypy = "1.11.0"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.7.1"
-markdown-it-py = "^3.0.0"
-mdit-plain = "^1.0.1"
 
 [tool.ruff]
 
