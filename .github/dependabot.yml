@@ -6,6 +6,7 @@
 version: 2
 updates:
   - package-ecosystem: "pip"
+    target-branch: "main"
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
