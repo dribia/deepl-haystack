@@ -9,8 +9,22 @@ repos:
     - --maxkb=500
   - id: end-of-file-fixer
   - id: trailing-whitespace
+- repo: https://github.com/floatingpurr/sync_with_poetry
+  rev: 1.2.0
+  hooks:
+  - id: sync_with_poetry
+    args:
+    - --db=.pre-commit-sync.json
+- repo: https://github.com/python-jsonschema/check-jsonschema
+  rev: 0.29.4
+  hooks:
+  - id: check-github-workflows
+- repo: https://github.com/mrtazz/checkmake.git
+  rev: 0.2.2
+  hooks:
+  - id: checkmake
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.5.4
+  rev: v0.7.2
   hooks:
   - id: ruff
     types_or: [ python, pyi ]
@@ -19,6 +33,13 @@ repos:
   - id: ruff-format
     types_or: [ python, pyi ]
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v1.11.0
+  rev: v1.11.2
   hooks:
   - id: mypy
+- repo: https://github.com/python-poetry/poetry
+  rev: 1.8.0
+  hooks:
+  - id: poetry-check
+  - id: poetry-lock
+    args:
+    - --no-update
