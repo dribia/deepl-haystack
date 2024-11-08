@@ -1,10 +1,20 @@
 DeepL Haystack Integration
 ==========================
 
+<p align="center">
+    <em>Haystack integration with DeepL translation services provider.</em>
+</p>
+
 |         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 |---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | CI/CD   | [![Tests](https://github.com/dribia/deepl-haystack/actions/workflows/test.yml/badge.svg)](https://github.com/dribia/deepl-haystack/actions/workflows/test.yml) [![Coverage Status](https://img.shields.io/codecov/c/github/dribia/deepl-haystack)](https://codecov.io/gh/dribia/deepl-haystack) [![Tests](https://github.com/dribia/deepl-haystack/actions/workflows/lint.yml/badge.svg)](https://github.com/dribia/deepl-haystack/actions/workflows/lint.yml) [![types - Mypy](https://img.shields.io/badge/types-Mypy-blue.svg)](https://github.com/python/mypy) [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff) |
 | Package | [![PyPI](https://img.shields.io/pypi/v/deepl-haystack)](https://pypi.org/project/deepl-haystack/) ![PyPI - Downloads](https://img.shields.io/pypi/dm/deepl-haystack?color=blue&logo=pypi&logoColor=gold) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/deepl-haystack?logo=python&logoColor=gold) [![GitHub](https://img.shields.io/github/license/dribia/deepl-haystack?color=blue)](LICENSE)                                                                                                                                                                                                                                                                                                                |
+---
+
+**Documentation**: [https://haystack.deepset.ai/integrations/deepl](https://haystack.deepset.ai/integrations/deepl)
+
+**Source Code**: [https://github.com/dribia/deepl-haystack](https://github.com/dribia/deepl-haystack)
+
 ---
 
 ## Installation
