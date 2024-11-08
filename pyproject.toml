@@ -45,18 +45,33 @@ select = [
     "W",  # pycodestyle warnings
     "F",  # pyflakes
     "I",  # isort
-    "C",  # flake8-comprehensions
+    "C",  # convention
     "B",  # flake8-bugbear
     "D",  # pydocstyle
     "UP",  # pyupgrade
+    "N",  # pep8-naming
+    "NPY",  # numpy
+    "PD",   # pandas
+    "RUF",  # ruff
+    "PTH",  # pathlib
+    "SIM",  # simplify
+    "RET",  # return
+    "RSE",  # raise
+    "Q",  # quotes
+    "G",  # logging-format
+    "LOG",  # logging
+    "ISC",  # implicit str concat
+    "C4",  # comprehensions
+    "COM",  # commas
+    "TD",  # to-do
+    "INT",  # gettext
+    "TRY",  # tryceratops
 ]
 ignore = [
-    "E501",  # line too long, handled by black
-    "C901",  # function is too complex
-    "D206",  # indent with spaces, not recommended with formatter
-    "W191",  # tab-indentation, not recommended with formatter
-    "D203",  # no-blank-line-before-class
-    "D213",  # multi-line-summary-second-line
+    "RUF013",  # implicit optional
+    "ISC001",  # allow implicit str concat
+    "COM812",  # allow missing trailing comma
+    "TRY003",  # allow long messages outside the exception class
 ]
 
 [tool.ruff.lint.per-file-ignores]
