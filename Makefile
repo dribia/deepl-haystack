@@ -1,7 +1,18 @@
-PROJECT:= deepl_haystack
-TESTS:= tests
+.PHONY: all clean check test codestyle docstyle lint pip
 
-.PHONY: check test codestyle docstyle lint pip
+PROJECT ?= deepl_haystack
+TESTS ?= tests
+
+all:
+	make clean
+	make lint || exit 1
+	make test || exit 1
+
+clean:
+	rm -rf .pytest_cache
+	rm -rf .mypy_cache
+	rm -rf .ruff_cache
+	rm -rf dritemplate-library-test
 
 check: format lint
 
