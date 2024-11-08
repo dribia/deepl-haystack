@@ -5,11 +5,28 @@
 
 version: 2
 updates:
-  - package-ecosystem: "pip" # See documentation for possible values
+  - package-ecosystem: "pip"
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
     allow:
       - dependency-type: "direct"
+        dependency-name: "deepl"
+      - dependency-type: "direct"
+        dependency-name: "haystack-ai"
     commit-message:
       prefix: ":arrow_up:"
+    versioning-strategy: "lockfile-only"
+
+  - package-ecosystem: "pip"
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+    allow:
+      - dependency-type: "direct"
+    ignore:
+      - dependency-name: "deepl"
+      - dependency-name: "haystack-ai"
+    commit-message:
+      prefix: ":arrow_up:"
+    versioning-strategy: "increase"
