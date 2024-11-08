@@ -1,7 +1,7 @@
 DeepL Haystack Integration
 ==========================
 
-<p align="center">
+<p align="left">
     <em>Haystack integration with DeepL translation services provider.</em>
 </p>
 
