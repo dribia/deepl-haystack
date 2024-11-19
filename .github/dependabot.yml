@@ -28,7 +28,7 @@ updates:
     schedule:
       interval: "weekly"
     allow:
-      - dependency-type: "direct"
+      - dependency-type: "all"
     ignore:
       - dependency-name: "deepl"
       - dependency-name: "haystack-ai"
