@@ -270,13 +270,13 @@ toml = ["tomli"]
 
 [[package]]
 name = "deepl"
-version = "1.18.0"
+version = "1.20.0"
 description = "Python library for the DeepL API."
 optional = false
 python-versions = "<4,>=3.6.2"
 files = [
-    {file = "deepl-1.18.0-py3-none-any.whl", hash = "sha256:2afe9adc459f5c591282e4d74570a0dc5041554d54dd687f72d3b0b77936e9ce"},
-    {file = "deepl-1.18.0.tar.gz", hash = "sha256:5ae41763939441edbca7640fd344280cbee47d490641ce35206910a8b01e778e"},
+    {file = "deepl-1.20.0-py3-none-any.whl", hash = "sha256:69f93a26d70bff6e2204a71f2e601c4b826cbad1ff6f0e3065cbf5d17a0662d9"},
+    {file = "deepl-1.20.0.tar.gz", hash = "sha256:2eae46d8f0279b00bce4686ec018bb5757a0ad0cc036616ef00ad12f9758955b"},
 ]
 
 [package.dependencies]
@@ -350,13 +350,13 @@ files = [
 
 [[package]]
 name = "haystack-ai"
-version = "2.5.0"
+version = "2.7.0"
 description = "LLM framework to build customizable, production-ready LLM applications. Connect components (models, vector DBs, file converters) to pipelines or agents that can interact with your data."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "haystack_ai-2.5.0-py3-none-any.whl", hash = "sha256:79db729acf635320f37e750c5b1dbac765fd3f8468f968229c51688a6fb83c5b"},
-    {file = "haystack_ai-2.5.0.tar.gz", hash = "sha256:ecf9071675da289411669769b456eb8f41da7510b1f6d8b1e242d7499dc59e8b"},
+    {file = "haystack_ai-2.7.0-py3-none-any.whl", hash = "sha256:9226fb099403ed676a7fee908a0c0dd6435d52bc5a092c867c34958333a0d358"},
+    {file = "haystack_ai-2.7.0.tar.gz", hash = "sha256:b950bbba229c3cb036cf4db1726bea8c8d1ca8c8b7a9afe27225394e55c6ba65"},
 ]
 
 [package.dependencies]
@@ -365,7 +365,7 @@ jinja2 = "*"
 lazy-imports = "*"
 more-itertools = "*"
 networkx = "*"
-numpy = "<2"
+numpy = "*"
 openai = ">=1.1.0"
 pandas = "*"
 posthog = "*"
