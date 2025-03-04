@@ -1,4 +1,4 @@
-.PHONY: all clean check test codestyle docstyle lint pip
+.PHONY: all clean check format lint lock test test-unit test-integration
 
 PROJECT ?= deepl_haystack
 TESTS ?= tests
@@ -12,7 +12,6 @@ clean:
 	rm -rf .pytest_cache
 	rm -rf .mypy_cache
 	rm -rf .ruff_cache
-	rm -rf dritemplate-library-test
 
 check: format lint
 
