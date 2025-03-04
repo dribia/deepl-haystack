@@ -72,6 +72,8 @@ ignore = [
     "ISC001",  # allow implicit str concat
     "COM812",  # allow missing trailing comma
     "TRY003",  # allow long messages outside the exception class
+    "UP006",  # allow use of old typings
+    "UP035",  # allow typing imports
 ]
 
 [tool.ruff.lint.per-file-ignores]

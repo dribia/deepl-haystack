@@ -1,6 +1,7 @@
 """Test suite configuration."""
 
-from typing import Iterable, Union
+from collections.abc import Iterable
+from typing import Union
 from unittest.mock import MagicMock, patch
 
 import pytest
