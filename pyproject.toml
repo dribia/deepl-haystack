@@ -26,16 +26,16 @@ haystack-ai = "^2.3.0"
 pytest-dotenv = "^0.5.2"
 
 [tool.poetry.group.test.dependencies]
-pytest = "^8.3.1"
+pytest = "^8.3.5"
 pytest-mock = "^3.14.0"
 pytest-cov = "^6.0.0"
 
 [tool.poetry.group.lint.dependencies]
-ruff = "0.7.4"
-mypy = "1.13.0"
+ruff = "0.9.9"
+mypy = "1.15.0"
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = ">=3.7.1,<5.0.0"
+pre-commit = "^4.1.0"
 
 [tool.ruff]
 
@@ -45,18 +45,35 @@ select = [
     "W",  # pycodestyle warnings
     "F",  # pyflakes
     "I",  # isort
-    "C",  # flake8-comprehensions
+    "C",  # convention
     "B",  # flake8-bugbear
     "D",  # pydocstyle
     "UP",  # pyupgrade
+    "N",  # pep8-naming
+    "NPY",  # numpy
+    "PD",   # pandas
+    "RUF",  # ruff
+    "PTH",  # pathlib
+    "SIM",  # simplify
+    "RET",  # return
+    "RSE",  # raise
+    "Q",  # quotes
+    "G",  # logging-format
+    "LOG",  # logging
+    "ISC",  # implicit str concat
+    "C4",  # comprehensions
+    "COM",  # commas
+    "TD",  # to-do
+    "INT",  # gettext
+    "TRY",  # tryceratops
 ]
 ignore = [
-    "E501",  # line too long, handled by black
-    "C901",  # function is too complex
-    "D206",  # indent with spaces, not recommended with formatter
-    "W191",  # tab-indentation, not recommended with formatter
-    "D203",  # no-blank-line-before-class
-    "D213",  # multi-line-summary-second-line
+    "RUF013",  # implicit optional
+    "ISC001",  # allow implicit str concat
+    "COM812",  # allow missing trailing comma
+    "TRY003",  # allow long messages outside the exception class
+    "UP006",  # allow use of old typings
+    "UP035",  # allow typing imports
 ]
 
 [tool.ruff.lint.per-file-ignores]

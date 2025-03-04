@@ -1,6 +1,7 @@
 """Test suite configuration."""
 
-from typing import Iterable, Union
+from collections.abc import Iterable
+from typing import Union
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -27,8 +28,7 @@ def translate_text_mock(
             text=text,
             detected_source_lang=source_lang or DEFAULT_SOURCE_LANG,
         )
-    else:
-        return [TextResult(text=t, detected_source_lang="DE") for t in text]
+    return [TextResult(text=t, detected_source_lang="DE") for t in text]
 
 
 @pytest.fixture

@@ -1,7 +1,17 @@
-PROJECT:= deepl_haystack
-TESTS:= tests
+.PHONY: all clean check format lint lock test test-unit test-integration
 
-.PHONY: check test codestyle docstyle lint pip
+PROJECT ?= deepl_haystack
+TESTS ?= tests
+
+all:
+	make clean
+	make lint || exit 1
+	make test || exit 1
+
+clean:
+	rm -rf .pytest_cache
+	rm -rf .mypy_cache
+	rm -rf .ruff_cache
 
 check: format lint
 
