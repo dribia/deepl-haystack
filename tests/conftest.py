@@ -27,8 +27,12 @@ def translate_text_mock(
         return TextResult(
             text=text,
             detected_source_lang=source_lang or DEFAULT_SOURCE_LANG,
+            billed_characters=len(text),
         )
-    return [TextResult(text=t, detected_source_lang="DE") for t in text]
+    return [
+        TextResult(text=t, detected_source_lang="DE", billed_characters=len(t))
+        for t in text
+    ]
 
 
 @pytest.fixture
