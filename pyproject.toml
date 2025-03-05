@@ -21,8 +21,8 @@ keywords = ["haystack", "deepl", "translation", "nlp"]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.13"
-deepl = "^1.18.0"
-haystack-ai = "^2.3.0"
+deepl = "^1.19.1"
+haystack-ai = "^2.0.0"
 pytest-dotenv = "^0.5.2"
 
 [tool.poetry.group.test.dependencies]
