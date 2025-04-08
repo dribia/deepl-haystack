@@ -28,10 +28,10 @@ pytest-dotenv = "^0.5.2"
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.5"
 pytest-mock = "^3.14.0"
-pytest-cov = "^6.0.0"
+pytest-cov = "^6.1.1"
 
 [tool.poetry.group.lint.dependencies]
-ruff = "0.11.2"
+ruff = "0.11.4"
 mypy = "1.15.0"
 
 [tool.poetry.group.dev.dependencies]
