@@ -1,6 +1,6 @@
 [project]
 name = "deepl-haystack"
-version = "0.2.2"
+version = "0.3.0"
 description = "Haystack integration with DeepL translation services provider."
 authors = [{ name = "Albert Iribarne", email = "iribarne@dribia.com" }]
 requires-python = ">=3.9,<3.14"
