@@ -290,7 +290,7 @@ class DeepLDocumentTranslator:
         )
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "DeepLTextTranslator":
+    def from_dict(cls, data: Dict[str, Any]) -> "DeepLDocumentTranslator":
         """Deserializes the component from a dictionary.
 
         Args:
