@@ -2,9 +2,10 @@
 
 import os
 from typing import Any
+from unittest.mock import patch
 
 import pytest
-from deepl import DeepLException, Formality, Translator
+from deepl import DeepLException, Formality, SplitSentences, Translator
 from haystack.utils import Secret
 
 from deepl_haystack import DeepLTextTranslator
@@ -29,6 +30,15 @@ class TestDeepLTextTranslator:
         assert component.formality is Formality.DEFAULT
         assert component.target_lang == "EN-US"
         assert component.source_lang is None
+        assert component.preserve_formatting is False
+        assert component.split_sentences is SplitSentences.DEFAULT
+        assert component.context is None
+        assert component.glossary is None
+        assert component.tag_handling is None
+        assert component.outline_detection is True
+        assert component.non_splitting_tags is None
+        assert component.splitting_tags is None
+        assert component.ignore_tags is None
 
     def test_init_fail_wo_api_key(self, monkeypatch):
         monkeypatch.delenv("DEEPL_API_KEY", raising=False)
@@ -36,6 +46,14 @@ class TestDeepLTextTranslator:
             ValueError, match="None of the .* environment variables are set"
         ):
             DeepLTextTranslator()
+
+    def test_init_fail_wo_target_lang(self, monkeypatch):
+        monkeypatch.setenv("DEEPL_API_KEY", "test-api-key")
+        with pytest.raises(
+            ValueError,
+            match="`target_lang` must be a string representing a language code.",
+        ):
+            DeepLTextTranslator(target_lang=None)
 
     def test_init_with_parameters(self, monkeypatch):
         monkeypatch.setenv("OPENAI_TIMEOUT", "100")
@@ -45,12 +63,30 @@ class TestDeepLTextTranslator:
             source_lang="DE",
             target_lang="ES",
             formality="more",
+            preserve_formatting=True,
+            split_sentences="nonewlines",
+            context="context",
+            glossary="glossary",
+            tag_handling="xml",
+            outline_detection=False,
+            non_splitting_tags="non_splitting_tags",
+            splitting_tags="splitting_tags",
+            ignore_tags="ignore_tags",
         )
         assert isinstance(component.client, Translator)
         assert "test-api-key" in component.client.headers["Authorization"]
         assert component.source_lang == "DE"
         assert component.target_lang == "ES"
         assert component.formality is Formality.MORE
+        assert component.preserve_formatting is True
+        assert component.split_sentences is SplitSentences.NO_NEWLINES
+        assert component.context == "context"
+        assert component.glossary == "glossary"
+        assert component.tag_handling == "xml"
+        assert component.outline_detection is False
+        assert component.non_splitting_tags == "non_splitting_tags"
+        assert component.splitting_tags == "splitting_tags"
+        assert component.ignore_tags == "ignore_tags"
 
     def test_to_dict_default(self, monkeypatch):
         monkeypatch.setenv("DEEPL_API_KEY", "test-api-key")
@@ -67,6 +103,15 @@ class TestDeepLTextTranslator:
                 "source_lang": None,
                 "target_lang": "EN-US",
                 "formality": Formality.DEFAULT.value,
+                "preserve_formatting": False,
+                "split_sentences": SplitSentences.DEFAULT.value,
+                "context": None,
+                "glossary": None,
+                "tag_handling": None,
+                "outline_detection": True,
+                "non_splitting_tags": None,
+                "splitting_tags": None,
+                "ignore_tags": None,
             },
         }
 
@@ -77,6 +122,15 @@ class TestDeepLTextTranslator:
             source_lang="DE",
             target_lang="ES",
             formality="more",
+            preserve_formatting=True,
+            split_sentences="nonewlines",
+            context="context",
+            glossary="glossary",
+            tag_handling="xml",
+            outline_detection=False,
+            non_splitting_tags="non_splitting_tags",
+            splitting_tags="splitting_tags",
+            ignore_tags="ignore_tags",
         )
         data = component.to_dict()
         assert data == {
@@ -86,6 +140,15 @@ class TestDeepLTextTranslator:
                 "source_lang": "DE",
                 "target_lang": "ES",
                 "formality": Formality.MORE.value,
+                "preserve_formatting": True,
+                "split_sentences": SplitSentences.NO_NEWLINES.value,
+                "context": "context",
+                "glossary": "glossary",
+                "tag_handling": "xml",
+                "outline_detection": False,
+                "non_splitting_tags": "non_splitting_tags",
+                "splitting_tags": "splitting_tags",
+                "ignore_tags": "ignore_tags",
             },
         }
 
@@ -102,6 +165,15 @@ class TestDeepLTextTranslator:
                 "source_lang": "DE",
                 "target_lang": "ES",
                 "formality": Formality.MORE.value,
+                "preserve_formatting": True,
+                "split_sentences": SplitSentences.NO_NEWLINES.value,
+                "context": "context",
+                "glossary": "glossary",
+                "tag_handling": "xml",
+                "outline_detection": False,
+                "non_splitting_tags": "non_splitting_tags",
+                "splitting_tags": "splitting_tags",
+                "ignore_tags": "ignore_tags",
             },
         }
         component = DeepLTextTranslator.from_dict(data)
@@ -123,6 +195,15 @@ class TestDeepLTextTranslator:
                 "source_lang": "DE",
                 "target_lang": "ES",
                 "formality": Formality.MORE.value,
+                "preserve_formatting": True,
+                "split_sentences": SplitSentences.NO_NEWLINES.value,
+                "context": "context",
+                "glossary": "glossary",
+                "tag_handling": "xml",
+                "outline_detection": False,
+                "non_splitting_tags": "non_splitting_tags",
+                "splitting_tags": "splitting_tags",
+                "ignore_tags": "ignore_tags",
             },
         }
         with pytest.raises(
@@ -148,6 +229,15 @@ class TestDeepLTextTranslator:
             source_lang=DEFAULT_SOURCE_LANG,
             target_lang=target_lang,
             formality=Formality(formality),
+            preserve_formatting=False,
+            split_sentences=SplitSentences.DEFAULT,
+            context=None,
+            glossary=None,
+            tag_handling=None,
+            outline_detection=True,
+            non_splitting_tags=None,
+            splitting_tags=None,
+            ignore_tags=None,
         )
         assert isinstance(response, dict)
         assert "translation" in response
@@ -157,6 +247,29 @@ class TestDeepLTextTranslator:
         assert "language" in response["meta"]
         assert response["meta"]["source_lang"] == DEFAULT_SOURCE_LANG
         assert response["meta"]["language"] == "ES"
+
+    def test_run_empty_text(self, monkeypatch, mock_translation):
+        monkeypatch.setenv("DEEPL_API_KEY", "fake-api-key")
+        component = DeepLTextTranslator(
+            source_lang=DEFAULT_SOURCE_LANG,
+            target_lang="ES",
+        )
+        with pytest.raises(ValueError, match="Empty text provided."):
+            component.run("")
+
+        mock_translation.assert_not_called()
+
+    @patch.object(
+        Translator, "translate_text", side_effect=DeepLException("Error translating")
+    )
+    def test_run_error_translating(self, monkeypatch, mock_translation):
+        monkeypatch.setenv("DEEPL_API_KEY", "fake-api-key")
+        component = DeepLTextTranslator(
+            source_lang=DEFAULT_SOURCE_LANG,
+            target_lang="ES",
+        )
+        with pytest.raises(DeepLException, match="Error translating"):
+            component.run("Error translating")
 
     def test_run_with_source_lang(self, monkeypatch, mock_translation):
         """Test the run method of the DeepLTextTranslator class."""
@@ -177,6 +290,15 @@ class TestDeepLTextTranslator:
             source_lang=source_lang,
             target_lang=target_lang,
             formality=Formality(formality),
+            preserve_formatting=False,
+            split_sentences=SplitSentences.DEFAULT,
+            context=None,
+            glossary=None,
+            tag_handling=None,
+            outline_detection=True,
+            non_splitting_tags=None,
+            splitting_tags=None,
+            ignore_tags=None,
         )
         assert isinstance(response, dict)
         assert "meta" in response
@@ -227,11 +349,15 @@ class TestDeepLTextTranslator:
         not os.environ.get("DEEPL_API_KEY", None),
         reason=_MISSING_API_KEY_REASON,
     )
+    @pytest.mark.skipif(
+        not os.environ.get("DEEPL_API_KEY", None),
+        reason=_MISSING_API_KEY_REASON,
+    )
     @pytest.mark.integration
     def test_live_run_wrong_source_language(self):
         component = DeepLTextTranslator(source_lang="something-wrong")
         with pytest.raises(
-            DeepLException, match=r".* Value for 'source_lang' not supported."
+            DeepLException, match=r".* Value for source_lang not supported"
         ):
             component.run("Whatever")
 
@@ -243,6 +369,6 @@ class TestDeepLTextTranslator:
     def test_live_run_wrong_target_language(self):
         component = DeepLTextTranslator(target_lang="something-wrong")
         with pytest.raises(
-            DeepLException, match=r".* Value for 'target_lang' not supported."
+            DeepLException, match=r".* Value for target_lang not supported"
         ):
             component.run("Whatever")
