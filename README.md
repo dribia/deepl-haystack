@@ -110,13 +110,13 @@ print(document_store.filter_documents())
 
 ## Contributing
 
-[Poetry](https://python-poetry.org) is the best way to interact with this project, to install it,
-follow the official [Poetry installation guide](https://python-poetry.org/docs/#installation).
+[uv](https://docs.astral.sh/uv/) is the best way to interact with this project, to install it,
+follow the official [uv installation guide](https://docs.astral.sh/uv/getting-started/installation/).
 
-With `poetry` installed, one can install the project dependencies with:
+With `uv` installed, one can install the project dependencies with:
 
 ```shell
-poetry install
+uv sync
 ```
 
 Then, to run the project unit tests:
