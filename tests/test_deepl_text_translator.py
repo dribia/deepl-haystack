@@ -259,17 +259,20 @@ class TestDeepLTextTranslator:
 
         mock_translation.assert_not_called()
 
-    @patch.object(
-        Translator, "translate_text", side_effect=DeepLException("Error translating")
-    )
-    def test_run_error_translating(self, monkeypatch, mock_translation):
+    def test_run_error_translating(self, monkeypatch):
         monkeypatch.setenv("DEEPL_API_KEY", "fake-api-key")
-        component = DeepLTextTranslator(
-            source_lang=DEFAULT_SOURCE_LANG,
-            target_lang="ES",
-        )
-        with pytest.raises(DeepLException, match="Error translating"):
-            component.run("Error translating")
+
+        with patch.object(
+            Translator,
+            "translate_text",
+            side_effect=DeepLException("Error translating"),
+        ):
+            component = DeepLTextTranslator(
+                source_lang=DEFAULT_SOURCE_LANG,
+                target_lang="ES",
+            )
+            with pytest.raises(DeepLException, match="Error translating"):
+                component.run("Error translating")
 
     def test_run_with_source_lang(self, monkeypatch, mock_translation):
         """Test the run method of the DeepLTextTranslator class."""
