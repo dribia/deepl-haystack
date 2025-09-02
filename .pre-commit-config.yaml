@@ -1,22 +1,32 @@
+default_install_hook_types:
+  - pre-commit
+  - post-checkout
+  - post-merge
+  - post-rewrite
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v5.0.0
+  rev: v6.0.0
   hooks:
   - id: check-yaml
+  - id: check-json
   - id: check-toml
   - id: check-added-large-files
     args:
     - --maxkb=500
   - id: end-of-file-fixer
   - id: trailing-whitespace
-- repo: https://github.com/floatingpurr/sync_with_poetry
-  rev: 1.2.0
+- repo: https://github.com/astral-sh/uv-pre-commit
+  rev: 0.8.14
   hooks:
-  - id: sync_with_poetry
-    args:
-    - --db=.pre-commit-sync.json
+  - id: uv-lock
+  - id: uv-sync
+    args: ["--locked", "--all-packages"]
+- repo: https://github.com/dribia/sync-with-uv
+  rev: v0.1.1
+  hooks:
+  - id: sync-with-uv
 - repo: https://github.com/python-jsonschema/check-jsonschema
-  rev: 0.33.0
+  rev: 0.33.3
   hooks:
   - id: check-github-workflows
 - repo: https://github.com/mrtazz/checkmake.git
@@ -26,7 +36,7 @@ repos:
 - repo: https://github.com/astral-sh/ruff-pre-commit
   rev: v0.12.11
   hooks:
-  - id: ruff
+  - id: ruff-check
     types_or: [ python, pyi ]
     args:
     - --fix
@@ -36,10 +46,3 @@ repos:
   rev: v1.17.1
   hooks:
   - id: mypy
-- repo: https://github.com/python-poetry/poetry
-  rev: 1.8.5
-  hooks:
-  - id: poetry-check
-  - id: poetry-lock
-    args:
-    - --no-update
