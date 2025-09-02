@@ -249,7 +249,7 @@ class TestDeepLDocumentTranslator:
     def test_live_run_wrong_source_language(self):
         component = DeepLDocumentTranslator(source_lang="something-wrong")
         with pytest.raises(
-            DeepLException, match=r".* Value for 'source_lang' not supported."
+            DeepLException, match=r".* Value for source_lang not supported"
         ):
             component.run([Document(content="Whatever")])
 
@@ -261,6 +261,6 @@ class TestDeepLDocumentTranslator:
     def test_live_run_wrong_target_language(self):
         component = DeepLDocumentTranslator(target_lang="something-wrong")
         with pytest.raises(
-            DeepLException, match=r".* Value for 'target_lang' not supported."
+            DeepLException, match=r".* Value for target_lang not supported"
         ):
             component.run([Document(content="Whatever")])
