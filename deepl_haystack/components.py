@@ -96,7 +96,7 @@ class DeepLTextTranslator:
         self.api_key: Secret = api_key
         self.max_retries: int = max_retries
         http_client.max_network_retries = self.max_retries
-        self.client: Translator = Translator(auth_key=self.api_key.resolve_value())
+        self.client: Translator = Translator(auth_key=str(self.api_key.resolve_value()))
 
         self.source_lang: Optional[str] = source_lang
         self.target_lang: str = target_lang
@@ -224,7 +224,7 @@ class DeepLDocumentTranslator:
 
         """
         self.api_key: Secret = api_key
-        self.client: Translator = Translator(auth_key=self.api_key.resolve_value())
+        self.client: Translator = Translator(auth_key=str(self.api_key.resolve_value()))
         self.source_lang: Optional[str] = source_lang
         self.target_lang: str = target_lang
         self.formality: Formality = Formality(formality or Formality.DEFAULT)
@@ -253,7 +253,7 @@ class DeepLDocumentTranslator:
             )
 
         translations = self.client.translate_text(
-            [doc.content for doc in documents],
+            [doc.content for doc in documents if doc.content],
             source_lang=source_lang or self.source_lang or None,
             target_lang=self.target_lang,
             formality=self.formality,
@@ -290,7 +290,7 @@ class DeepLDocumentTranslator:
         )
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "DeepLTextTranslator":
+    def from_dict(cls, data: Dict[str, Any]) -> "DeepLDocumentTranslator":
         """Deserializes the component from a dictionary.
 
         Args:
