@@ -5,6 +5,17 @@
 
 version: 2
 updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      all:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: ":arrow_up:"
+
   - package-ecosystem: "pip"
     target-branch: "main"
     directory: "/" # Location of package manifests
