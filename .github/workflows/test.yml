@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: snok/install-poetry@v1
         with:
           version: '1.8.5'
@@ -31,7 +31,7 @@ jobs:
         run: poetry install --only main,test
       - name: Test
         run: make test-unit
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -46,7 +46,7 @@ jobs:
     env:
       DEEPL_API_KEY: ${{ secrets.DEEPL_API_KEY }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: snok/install-poetry@v1
         with:
           version: '1.8.5'
