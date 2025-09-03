@@ -12,11 +12,6 @@ on:
           - 'minor'
           - 'patch'
         default: 'patch'
-      keep-release-branch:
-        description: 'Keep release branch'
-        required: false
-        type: boolean
-        default: false
 
 jobs:
   create-release-branch:
@@ -26,20 +21,17 @@ jobs:
       id-token: 'write'
     steps:
       - uses: actions/checkout@v5
-      - uses: snok/install-poetry@v1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
         with:
-          version: '1.8.5'
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-          cache: 'poetry'
+          enable-cache: true
       - name: Bump version
         id: bump-version
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           make bump-version COMMIT_VERSION=${{ github.event.inputs.version }}
-          NEW_VERSION=v$(poetry version -s)
+          NEW_VERSION=v$(uv version --dry-run --short)
           git tag -d $NEW_VERSION 2> /dev/null
           echo "::add-mask::$NEW_VERSION"
           echo "new-version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
@@ -79,17 +71,23 @@ jobs:
         run: |
           git fetch origin release/${{ steps.decrypt-tag.outputs.version }}:release/${{ steps.decrypt-tag.outputs.version }}
           git reset --hard release/${{ steps.decrypt-tag.outputs.version }}
+      - name: Generate token for release bot
+        uses: actions/create-github-app-token@v2
+        id: generate-token
+        with:
+          app-id: ${{ secrets.RELEASE_BOT_APP_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_APP_PRIVATE_KEY }}
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v7
         with:
-          commit-message: ":rocket: New release ${{ steps.decrypt-tag.outputs.version }}"
-          committer:  ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
-          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
-          base: main
+          token: ${{ steps.generate-token.outputs.token }}
+          commit-message: ":label: Version bump to ${{ steps.decrypt-tag.outputs.version }}"
+          base: ${{ github.ref_name }}
           branch: release/${{ steps.decrypt-tag.outputs.version }}-merge
           delete-branch: true
-          title: ":rocket: New release ${{ steps.decrypt-tag.outputs.version }}"
+          title: ":label: Version bump to ${{ steps.decrypt-tag.outputs.version }}"
+          reviewers: ${{ github.actor }}
 
   delete-release-branch:
     if: ${{ ! inputs.keep-release-branch }}

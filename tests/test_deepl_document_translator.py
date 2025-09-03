@@ -4,7 +4,7 @@ import os
 from typing import Any
 
 import pytest
-from deepl import DeepLException, Formality, Translator
+from deepl import DeepLException, Formality, SplitSentences, Translator
 from haystack import Document
 from haystack.utils import Secret
 
@@ -30,6 +30,16 @@ class TestDeepLDocumentTranslator:
         assert component.formality is Formality.DEFAULT
         assert component.target_lang == "EN-US"
         assert component.source_lang is None
+        assert component.preserve_formatting is False
+        assert component.split_sentences is SplitSentences.DEFAULT
+        assert component.context is None
+        assert component.glossary is None
+        assert component.tag_handling is None
+        assert component.outline_detection is True
+        assert component.non_splitting_tags is None
+        assert component.splitting_tags is None
+        assert component.ignore_tags is None
+        assert component.include_score is True
 
     def test_init_fail_wo_api_key(self, monkeypatch):
         monkeypatch.delenv("DEEPL_API_KEY", raising=False)
@@ -38,20 +48,46 @@ class TestDeepLDocumentTranslator:
         ):
             DeepLDocumentTranslator()
 
-    def test_init_with_parameters(self, monkeypatch):
-        monkeypatch.setenv("OPENAI_TIMEOUT", "100")
-        monkeypatch.setenv("OPENAI_MAX_RETRIES", "10")
+    @pytest.mark.parametrize("target_lang", [1, [1, 2, 3], ["ES", "FR", False]])
+    def test_init_fail_target_lang_wrong_type(self, target_lang):
+        with pytest.raises(
+            TypeError,
+            match="`target_lang` must be a string representing a language code or",
+        ):
+            DeepLDocumentTranslator(target_lang=target_lang)
+
+    def test_init_with_parameters(self):
         component = DeepLDocumentTranslator(
             api_key=Secret.from_token("test-api-key"),
             source_lang="DE",
-            target_lang="ES",
+            target_lang=["ES", "FR"],
             formality="more",
+            preserve_formatting=True,
+            split_sentences="nonewlines",
+            context="context",
+            glossary="glossary",
+            tag_handling="xml",
+            outline_detection=False,
+            non_splitting_tags="non_splitting_tags",
+            splitting_tags="splitting_tags",
+            ignore_tags="ignore_tags",
+            include_score=False,
         )
         assert isinstance(component.client, Translator)
         assert "test-api-key" in component.client.headers["Authorization"]
         assert component.source_lang == "DE"
-        assert component.target_lang == "ES"
+        assert component.target_lang == ["ES", "FR"]
         assert component.formality is Formality.MORE
+        assert component.preserve_formatting is True
+        assert component.split_sentences is SplitSentences.NO_NEWLINES
+        assert component.context == "context"
+        assert component.glossary == "glossary"
+        assert component.tag_handling == "xml"
+        assert component.outline_detection is False
+        assert component.non_splitting_tags == "non_splitting_tags"
+        assert component.splitting_tags == "splitting_tags"
+        assert component.ignore_tags == "ignore_tags"
+        assert component.include_score is False
 
     def test_to_dict_default(self, monkeypatch):
         monkeypatch.setenv("DEEPL_API_KEY", "test-api-key")
@@ -68,6 +104,16 @@ class TestDeepLDocumentTranslator:
                 "source_lang": None,
                 "target_lang": "EN-US",
                 "formality": Formality.DEFAULT.value,
+                "preserve_formatting": False,
+                "split_sentences": SplitSentences.DEFAULT.value,
+                "context": None,
+                "glossary": None,
+                "tag_handling": None,
+                "outline_detection": True,
+                "non_splitting_tags": None,
+                "splitting_tags": None,
+                "ignore_tags": None,
+                "include_score": True,
             },
         }
 
@@ -76,8 +122,18 @@ class TestDeepLDocumentTranslator:
         component = DeepLDocumentTranslator(
             api_key=Secret.from_env_var("ENV_VAR"),
             source_lang="DE",
-            target_lang="ES",
+            target_lang=["ES", "FR"],
             formality="more",
+            preserve_formatting=True,
+            split_sentences="nonewlines",
+            context="context",
+            glossary="glossary",
+            tag_handling="xml",
+            outline_detection=False,
+            non_splitting_tags="non_splitting_tags",
+            splitting_tags="splitting_tags",
+            ignore_tags="ignore_tags",
+            include_score=False,
         )
         data = component.to_dict()
         assert data == {
@@ -85,8 +141,18 @@ class TestDeepLDocumentTranslator:
             "init_parameters": {
                 "api_key": {"env_vars": ["ENV_VAR"], "strict": True, "type": "env_var"},
                 "source_lang": "DE",
-                "target_lang": "ES",
+                "target_lang": ["ES", "FR"],
                 "formality": Formality.MORE.value,
+                "preserve_formatting": True,
+                "split_sentences": SplitSentences.NO_NEWLINES.value,
+                "context": "context",
+                "glossary": "glossary",
+                "tag_handling": "xml",
+                "outline_detection": False,
+                "non_splitting_tags": "non_splitting_tags",
+                "splitting_tags": "splitting_tags",
+                "ignore_tags": "ignore_tags",
+                "include_score": False,
             },
         }
 
@@ -103,8 +169,19 @@ class TestDeepLDocumentTranslator:
                 "source_lang": "DE",
                 "target_lang": "ES",
                 "formality": Formality.MORE.value,
+                "preserve_formatting": False,
+                "split_sentences": SplitSentences.DEFAULT.value,
+                "context": None,
+                "glossary": None,
+                "tag_handling": None,
+                "outline_detection": True,
+                "non_splitting_tags": None,
+                "splitting_tags": None,
+                "ignore_tags": None,
+                "include_score": True,
             },
         }
+
         component = DeepLDocumentTranslator.from_dict(data)
         assert component.source_lang == "DE"
         assert component.target_lang == "ES"
@@ -124,6 +201,16 @@ class TestDeepLDocumentTranslator:
                 "source_lang": "DE",
                 "target_lang": "ES",
                 "formality": Formality.MORE.value,
+                "preserve_formatting": False,
+                "split_sentences": SplitSentences.DEFAULT.value,
+                "context": None,
+                "glossary": None,
+                "tag_handling": None,
+                "outline_detection": True,
+                "non_splitting_tags": None,
+                "splitting_tags": None,
+                "ignore_tags": None,
+                "include_score": True,
             },
         }
         with pytest.raises(
@@ -131,7 +218,7 @@ class TestDeepLDocumentTranslator:
         ):
             DeepLDocumentTranslator.from_dict(data)
 
-    def test_run_one_doc(self, monkeypatch, mock_translation):
+    def test_run_one_doc(self, monkeypatch, mock_translation, caplog):
         """Test the run method of the DeepLDocumentTranslator class.
 
         Tests the single document use case.
@@ -146,13 +233,17 @@ class TestDeepLDocumentTranslator:
             target_lang=target_lang,
             formality=formality,
         )
-        documents = [Document(content=text)]
+        documents = [Document(content=text, meta={"source_lang": "EN"})]
         response = component.run(documents)
         mock_translation.assert_called_once_with(
             [text],
             source_lang=DEFAULT_SOURCE_LANG,
             target_lang=target_lang,
             formality=Formality(formality),
+        )
+        assert (
+            "Document meta already contains language or source_lang. "
+            "These fields will be overwritten." in caplog.text
         )
         assert isinstance(response, dict)
         assert len(response) == 1
@@ -182,12 +273,7 @@ class TestDeepLDocumentTranslator:
         documents = []
         response = component.run(documents)
 
-        mock_translation.assert_called_once_with(
-            [],
-            source_lang=DEFAULT_SOURCE_LANG,
-            target_lang=target_lang,
-            formality=Formality(formality),
-        )
+        mock_translation.assert_not_called()
         assert isinstance(response, dict)
         assert "documents" in response
         assert len(response) == 1
@@ -208,7 +294,7 @@ class TestDeepLDocumentTranslator:
         )
         with pytest.raises(
             TypeError,
-            match="DeepLTextTranslator expects a list of Haystack documents as input.",
+            match="DeepLDocumentTranslator expects a list of Haystack documents",
         ):
             component.run(wrong_input)
 
@@ -216,7 +302,7 @@ class TestDeepLDocumentTranslator:
         """Test the run method of the DeepLDocumentTranslator class."""
         monkeypatch.setenv("DEEPL_API_KEY", "fake-api-key")
         text = "What's Natural Language Processing?"
-        component = DeepLDocumentTranslator(target_lang="ES")
+        component = DeepLDocumentTranslator(target_lang=["ES", "FR"])
         meta = {"meta_1": "foo", "meta_2": "bar"}
         response = component.run([Document(content=text, meta=meta)])
         assert "source_lang" in response["documents"][0].meta
@@ -225,6 +311,22 @@ class TestDeepLDocumentTranslator:
         assert "meta_2" in response["documents"][0].meta
         assert response["documents"][0].meta["meta_1"] == "foo"
         assert response["documents"][0].meta["meta_2"] == "bar"
+
+    def test_run_multiple_languages(self, monkeypatch, mock_translation):
+        monkeypatch.setenv("DEEPL_API_KEY", "fake-api-key")
+        doc = Document(content="Example", meta={"meta_1": "foo", "meta_2": "bar"})
+        component = DeepLDocumentTranslator(target_lang=["ES", "FR"])
+        response = component.run([doc])
+
+        assert len(response["documents"]) == 2
+
+        assert response["documents"][0].meta["meta_1"] == "foo"
+        assert response["documents"][0].meta["meta_2"] == "bar"
+        assert response["documents"][0].meta["language"] == "ES"
+
+        assert response["documents"][1].meta["meta_1"] == "foo"
+        assert response["documents"][1].meta["meta_2"] == "bar"
+        assert response["documents"][1].meta["language"] == "FR"
 
     @pytest.mark.skipif(
         not os.environ.get("DEEPL_API_KEY", None),
