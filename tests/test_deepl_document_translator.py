@@ -44,7 +44,7 @@ class TestDeepLDocumentTranslator:
     def test_init_fail_wo_api_key(self, monkeypatch):
         monkeypatch.delenv("DEEPL_API_KEY", raising=False)
         with pytest.raises(
-            ValueError, match="None of the .* environment variables are set"
+            ValueError, match=r"None of the .* environment variables are set"
         ):
             DeepLDocumentTranslator()
 
@@ -214,7 +214,7 @@ class TestDeepLDocumentTranslator:
             },
         }
         with pytest.raises(
-            ValueError, match="None of the .* environment variables are set"
+            ValueError, match=r"None of the .* environment variables are set"
         ):
             DeepLDocumentTranslator.from_dict(data)
 

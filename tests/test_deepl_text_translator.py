@@ -43,7 +43,7 @@ class TestDeepLTextTranslator:
     def test_init_fail_wo_api_key(self, monkeypatch):
         monkeypatch.delenv("DEEPL_API_KEY", raising=False)
         with pytest.raises(
-            ValueError, match="None of the .* environment variables are set"
+            ValueError, match=r"None of the .* environment variables are set"
         ):
             DeepLTextTranslator()
 
@@ -51,7 +51,7 @@ class TestDeepLTextTranslator:
         monkeypatch.setenv("DEEPL_API_KEY", "test-api-key")
         with pytest.raises(
             ValueError,
-            match="`target_lang` must be a string representing a language code.",
+            match=r"`target_lang` must be a string representing a language code.",
         ):
             DeepLTextTranslator(target_lang=None)
 
@@ -207,7 +207,7 @@ class TestDeepLTextTranslator:
             },
         }
         with pytest.raises(
-            ValueError, match="None of the .* environment variables are set"
+            ValueError, match=r"None of the .* environment variables are set"
         ):
             DeepLTextTranslator.from_dict(data)
 
@@ -254,7 +254,7 @@ class TestDeepLTextTranslator:
             source_lang=DEFAULT_SOURCE_LANG,
             target_lang="ES",
         )
-        with pytest.raises(ValueError, match="Empty text provided."):
+        with pytest.raises(ValueError, match=r"Empty text provided."):
             component.run("")
 
         mock_translation.assert_not_called()
@@ -271,7 +271,7 @@ class TestDeepLTextTranslator:
                 source_lang=DEFAULT_SOURCE_LANG,
                 target_lang="ES",
             )
-            with pytest.raises(DeepLException, match="Error translating"):
+            with pytest.raises(DeepLException, match=r"Error translating"):
                 component.run("Error translating")
 
     def test_run_with_source_lang(self, monkeypatch, mock_translation):
@@ -326,9 +326,9 @@ class TestDeepLTextTranslator:
         with pytest.raises(
             TypeError,
             match=(
-                "DeepLTextTranslator expects a string as an input. "
+                r"DeepLTextTranslator expects a string as an input. "
                 "In case you want to translate a list of Documents, "
-                "please use the DeepLDocumentTranslator."
+                r"please use the DeepLDocumentTranslator."
             ),
         ):
             component.run(wrong_input)

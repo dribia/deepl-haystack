@@ -48,11 +48,11 @@ ci = [
 test = [
     "pytest>=8.3.5,<9",
     "pytest-mock>=3.14.1,<4",
-    "pytest-cov>=6.2.1,<7",
+    "pytest-cov>=7.0.0,<8",
 ]
 lint = [
-    "ruff==0.12.12",
-    "mypy==1.17.1",
+    "ruff==0.13.0",
+    "mypy==1.18.1",
 ]
 
 [tool.uv]
