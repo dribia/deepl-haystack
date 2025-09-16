@@ -271,7 +271,7 @@ class TestDeepLTextTranslator:
                 source_lang=DEFAULT_SOURCE_LANG,
                 target_lang="ES",
             )
-            with pytest.raises(DeepLException, match=r"Error translating."):
+            with pytest.raises(DeepLException, match=r"Error translating"):
                 component.run("Error translating")
 
     def test_run_with_source_lang(self, monkeypatch, mock_translation):
