@@ -311,7 +311,7 @@ name = "exceptiongroup"
 version = "1.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0b/9f/a65090624ecf468cdca03533906e7c69ed7588582240cfe7cc9e770b50eb/exceptiongroup-1.3.0.tar.gz", hash = "sha256:b241f5885f560bc56a59ee63ca4c6a8bfa46ae4ad651af316d4e81817bb9fd88", size = 29749, upload-time = "2025-05-10T17:42:51.123Z" }
 wheels = [
@@ -347,7 +347,7 @@ wheels = [
 
 [[package]]
 name = "haystack-ai"
-version = "2.17.1"
+version = "2.18.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "docstring-parser" },
@@ -373,9 +373,9 @@ dependencies = [
     { name = "tqdm" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f3/e7/84904bc3477791348e887b75bbd8ad99cf2dd6f11057a27d5623a0f21d04/haystack_ai-2.17.1.tar.gz", hash = "sha256:dffd79c2202a93a95dbf31bbb888027f8e78791902ef984974f0409059a9eb30", size = 394779, upload-time = "2025-08-20T09:18:52.893Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/5c/5b/c8aa53f005dc527ad3cd6f7fa3ce5dcc90b41f6137b6aa8812e7828937bd/haystack_ai-2.18.0.tar.gz", hash = "sha256:71128fdc068af07f94a052f6ef9ac79cc2bc23b494a455919fd4892b7950646f", size = 402582, upload-time = "2025-09-22T14:45:32.43Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9a/41/6f6e02484fab83d98dc6d22bd2905282b18ed8eb08d215101ef5a564f9f2/haystack_ai-2.17.1-py3-none-any.whl", hash = "sha256:2c83ace96633d66bafa7c1511cb3c906e181cc982aa49b09a27f7620430bc129", size = 582728, upload-time = "2025-08-20T09:18:51.083Z" },
+    { url = "https://files.pythonhosted.org/packages/a2/ad/45a748b99ad6a428260ab829999c2950143cf5a67c4c833a7ddacc32e685/haystack_ai-2.18.0-py3-none-any.whl", hash = "sha256:8cac1928c79ff3b5ab4e49d9acc3c9436735fb965d79a57ec723db819e07d997", size = 591590, upload-time = "2025-09-22T14:45:30.663Z" },
 ]
 
 [[package]]
