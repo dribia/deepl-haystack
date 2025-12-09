@@ -220,14 +220,14 @@ toml = [
 
 [[package]]
 name = "deepl"
-version = "1.25.0"
+version = "1.26.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e8/9d/4cb65e741ef552c45687a25db2e4e1f619b9c2fb3d3458252a4a2016fcdc/deepl-1.25.0.tar.gz", hash = "sha256:9c5be635056e83a7334840a8adecfd962c5cb85579f21b15c10643e9d77c238a", size = 50554, upload-time = "2025-11-12T19:08:30.372Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e6/f6/81bb32d52b0639f47b99c41908150e10d5fdf969c4dbde1d19925881b619/deepl-1.26.0.tar.gz", hash = "sha256:7c227f15e58a455b7c1fa89da4203cdb0b0bef63ff7910526d6d6798f18de5da", size = 51091, upload-time = "2025-12-08T21:23:44.414Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6d/8c/136035269930d365fbb47ccf92cb6bc9be60edb5b4fa84d591ba9c212030/deepl-1.25.0-py3-none-any.whl", hash = "sha256:071f929a1b80252f16922e84748f7635db110746cada00b2cf2de7d2080cbbcf", size = 45772, upload-time = "2025-11-12T19:08:28.187Z" },
+    { url = "https://files.pythonhosted.org/packages/29/a0/dd2237d8a849c234a475eacf42906080ecf6435420c8ee0a829e95f942a5/deepl-1.26.0-py3-none-any.whl", hash = "sha256:74d4878354ced7aad8e15fd87fecf2252bc2480405592c26236a9aff8e2a5a50", size = 46130, upload-time = "2025-12-08T21:23:43.334Z" },
 ]
 
 [[package]]
@@ -347,7 +347,7 @@ wheels = [
 
 [[package]]
 name = "haystack-ai"
-version = "2.20.0"
+version = "2.21.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "docstring-parser" },
@@ -373,9 +373,9 @@ dependencies = [
     { name = "tqdm" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c3/e7/473337a8450265e647e355b180d556d6eec01db6a732a1f9dd5542999b8c/haystack_ai-2.20.0.tar.gz", hash = "sha256:6f34048706b6e74e7f1b3026320253d4f55568f48398e0511434983d547207b6", size = 423901, upload-time = "2025-11-13T15:06:29.843Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c3/be/26199a09d9872f89b260ee8ef9ca3838137bdc0b70dac9e52defaa8e4518/haystack_ai-2.21.0.tar.gz", hash = "sha256:ff2a5150a323818143af3649f7ed2def34dcd1c91f5e90c4f3e1a49f2eb275d5", size = 430962, upload-time = "2025-12-08T15:47:41.878Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6b/53/1728ca7bf1dd60c428d49095860363b569cf6b58b1b38483bfee0ac44b60/haystack_ai-2.20.0-py3-none-any.whl", hash = "sha256:0900090898dce092cee1d0c90f0e22be9ec1bd57cbc4f8793a56f6e96481531a", size = 624721, upload-time = "2025-11-13T15:06:28.024Z" },
+    { url = "https://files.pythonhosted.org/packages/b7/a0/ffc46df366eb0efdc6c391d542f6aab86b9af9aa169ea27cf0e4268cf67f/haystack_ai-2.21.0-py3-none-any.whl", hash = "sha256:2e2a0a4c29fd2e9638ac364031b684fbfba9b140a68f09b1b82ff01986bb3259", size = 636351, upload-time = "2025-12-08T15:47:43.509Z" },
 ]
 
 [[package]]
