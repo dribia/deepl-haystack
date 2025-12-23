@@ -237,8 +237,6 @@ source = { editable = "." }
 dependencies = [
     { name = "deepl" },
     { name = "haystack-ai" },
-    { name = "pytest" },
-    { name = "pytest-dotenv" },
 ]
 
 [package.dev-dependencies]
@@ -255,6 +253,7 @@ lint = [
 test = [
     { name = "pytest" },
     { name = "pytest-cov" },
+    { name = "pytest-dotenv" },
     { name = "pytest-mock" },
 ]
 
@@ -262,8 +261,6 @@ test = [
 requires-dist = [
     { name = "deepl", specifier = ">=1.19.1,<2" },
     { name = "haystack-ai", specifier = ">=2.0.0,<3" },
-    { name = "pytest", specifier = ">=8.4.1,<9" },
-    { name = "pytest-dotenv", specifier = ">=0.5.2,<0.6" },
 ]
 
 [package.metadata.requires-dev]
@@ -276,6 +273,7 @@ lint = [
 test = [
     { name = "pytest", specifier = ">=8.3.5,<9" },
     { name = "pytest-cov", specifier = ">=7.0.0,<8" },
+    { name = "pytest-dotenv", specifier = ">=0.5.2,<0.6" },
     { name = "pytest-mock", specifier = ">=3.14.1,<4" },
 ]
 
