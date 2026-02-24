@@ -50,7 +50,7 @@ test = [
     "pytest-dotenv>=0.5.2,<0.6",
 ]
 lint = [
-    "ruff==0.15.1",
+    "ruff==0.15.2",
     "mypy==1.19.1",
 ]
 
