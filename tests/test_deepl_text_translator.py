@@ -53,7 +53,7 @@ class TestDeepLTextTranslator:
             ValueError,
             match=r"`target_lang` must be a string representing a language code.",
         ):
-            DeepLTextTranslator(target_lang=None)
+            DeepLTextTranslator(target_lang=None)  # ty: ignore[invalid-argument-type]
 
     def test_init_with_parameters(self, monkeypatch):
         monkeypatch.setenv("OPENAI_TIMEOUT", "100")

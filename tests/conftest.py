@@ -1,21 +1,20 @@
 """Test suite configuration."""
 
 from collections.abc import Iterable
-from typing import Union
 from unittest.mock import MagicMock, patch
 
 import pytest
 from deepl import Formality, Language, TextResult, Translator
 
-DEFAULT_SOURCE_LANG = "DE"
+DEFAULT_SOURCE_LANG: str = "DE"
 
 
 def translate_text_mock(
-    text: Union[str, Iterable[str]],
+    text: str | Iterable[str],
     *,
-    target_lang: Union[str, Language],
-    source_lang: Union[str, Language, None] = None,
-    formality: Union[str, Formality, None] = None,
+    target_lang: str | Language,
+    source_lang: str | Language | None = None,
+    formality: str | Formality | None = None,
     **kwargs,
 ):
     """Mock the DeepL API translation response.
@@ -26,7 +25,7 @@ def translate_text_mock(
     if isinstance(text, str):
         return TextResult(
             text=text,
-            detected_source_lang=source_lang or DEFAULT_SOURCE_LANG,
+            detected_source_lang=str(source_lang or DEFAULT_SOURCE_LANG),
             billed_characters=len(text),
         )
     return [
