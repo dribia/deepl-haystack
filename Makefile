@@ -1,8 +1,5 @@
 .PHONY: all clean check format lint lock test test-unit test-integration
 
-PROJECT ?= deepl_haystack
-TESTS ?= tests
-
 all:
 	make clean
 	make lint || exit 1
@@ -16,8 +13,8 @@ clean:
 check: format lint
 
 format:
-	uv run ruff format $(PROJECT) tests
-	uv run ruff check --fix --unsafe-fixes $(PROJECT) $(TESTS)
+	uv run --frozen ruff format
+	uv run --frozen ruff check --fix --unsafe-fixes
 
 --check-git-status:
 	@status=$$(git status --porcelain); \
@@ -29,21 +26,21 @@ format:
 		fi
 
 lint:
-	uv run ruff format --check $(PROJECT) $(TESTS)
-	uv run ruff check $(PROJECT) $(TESTS)
-	uv run mypy $(PROJECT)
+	uv run --frozen ruff format --check
+	uv run --frozen ruff check
+	uv run --frozen ty check
 
 lock:
 	uv lock --no-upgrade
 
 test:
-	uv run pytest --cov --cov-report=html --cov-report=xml
+	uv run --frozen pytest --cov --cov-report=html --cov-report=xml
 
 test-unit:
-	uv run pytest --cov --cov-report=html --cov-report=xml -m "not integration"
+	uv run --frozen pytest --cov --cov-report=html --cov-report=xml -m "not integration"
 
 test-integration:
-	uv run pytest -m "integration"
+	uv run --frozen pytest -m "integration"
 
 bump-version:
 	@make -- --check-git-status

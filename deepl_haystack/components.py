@@ -1,6 +1,6 @@
 """DeepL translator components."""
 
-from typing import Any, Dict, List, Literal, Optional, Union
+from typing import Any, Literal, Self
 
 from deepl import (
     Formality,
@@ -22,20 +22,20 @@ class DeepLTextTranslator:
     def __init__(
         self,
         api_key: Secret = Secret.from_env_var("DEEPL_API_KEY"),  # noqa: B008
-        source_lang: Optional[str] = None,
+        source_lang: str | None = None,
         target_lang: str = "EN-US",
-        formality: Union[str, Formality, None] = None,
+        formality: str | Formality | None = None,
         *,
         max_retries: int = 5,
         preserve_formatting: bool = False,
-        split_sentences: Union[str, SplitSentences, None] = None,
-        context: Optional[str] = None,
-        glossary: Union[str, None] = None,
+        split_sentences: str | SplitSentences | None = None,
+        context: str | None = None,
+        glossary: str | None = None,
         tag_handling: Literal[None, "xml", "html"] = None,
         outline_detection: bool = True,
-        non_splitting_tags: Union[str, List[str], None] = None,
-        splitting_tags: Union[str, List[str], None] = None,
-        ignore_tags: Union[str, List[str], None] = None,
+        non_splitting_tags: str | list[str] | None = None,
+        splitting_tags: str | list[str] | None = None,
+        ignore_tags: str | list[str] | None = None,
     ):
         """Create a DeepLTextTranslator component.
 
@@ -95,26 +95,26 @@ class DeepLTextTranslator:
 
         self.api_key: Secret = api_key
         self.max_retries: int = max_retries
-        http_client.max_network_retries = self.max_retries
+        http_client.max_network_retries = self.max_retries  # ty: ignore[invalid-assignment]
         self.client: Translator = Translator(auth_key=str(self.api_key.resolve_value()))
 
-        self.source_lang: Optional[str] = source_lang
+        self.source_lang: str | None = source_lang
         self.target_lang: str = target_lang
         self.formality: Formality = Formality(formality or Formality.DEFAULT)
         self.preserve_formatting: bool = preserve_formatting
         self.split_sentences: SplitSentences = SplitSentences(
             split_sentences or SplitSentences.DEFAULT
         )
-        self.context: Optional[str] = context
-        self.glossary: Union[str, None] = glossary
+        self.context: str | None = context
+        self.glossary: str | None = glossary
         self.tag_handling: Literal[None, "xml", "html"] = tag_handling
         self.outline_detection: bool = outline_detection
-        self.non_splitting_tags: Union[str, List[str], None] = non_splitting_tags
-        self.splitting_tags: Union[str, List[str], None] = splitting_tags
-        self.ignore_tags: Union[str, List[str], None] = ignore_tags
+        self.non_splitting_tags: str | list[str] | None = non_splitting_tags
+        self.splitting_tags: str | list[str] | None = splitting_tags
+        self.ignore_tags: str | list[str] | None = ignore_tags
 
-    @component.output_types(translation=str, meta=Dict[str, Any])
-    def run(self, text: str, source_lang: Optional[str] = None):
+    @component.output_types(translation=str, meta=dict[str, Any])
+    def run(self, text: str, source_lang: str | None = None):
         """Translate a single string.
 
         Args:
@@ -162,7 +162,7 @@ class DeepLTextTranslator:
 
         return {"translation": translation.text, "meta": meta}
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Serializes the component to a dictionary.
 
         Returns: Dictionary with serialized data.
@@ -186,7 +186,7 @@ class DeepLTextTranslator:
         )
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "DeepLTextTranslator":
+    def from_dict(cls, data: dict[str, Any]) -> Self:
         """Deserializes the component from a dictionary.
 
         Args:
@@ -206,20 +206,20 @@ class DeepLDocumentTranslator:
     def __init__(
         self,
         api_key: Secret = Secret.from_env_var("DEEPL_API_KEY"),  # noqa: B008
-        source_lang: Optional[str] = None,
-        target_lang: Union[str, List[str]] = "EN-US",
-        formality: Union[str, Formality, None] = None,
+        source_lang: str | None = None,
+        target_lang: str | list[str] = "EN-US",
+        formality: str | Formality | None = None,
         *,
         max_retries: int = 5,
         preserve_formatting: bool = False,
-        split_sentences: Union[str, SplitSentences, None] = None,
-        context: Optional[str] = None,
-        glossary: Union[str, None] = None,
+        split_sentences: str | SplitSentences | None = None,
+        context: str | None = None,
+        glossary: str | None = None,
         tag_handling: Literal[None, "xml", "html"] = None,
         outline_detection: bool = True,
-        non_splitting_tags: Union[str, List[str], None] = None,
-        splitting_tags: Union[str, List[str], None] = None,
-        ignore_tags: Union[str, List[str], None] = None,
+        non_splitting_tags: str | list[str] | None = None,
+        splitting_tags: str | list[str] | None = None,
+        ignore_tags: str | list[str] | None = None,
         include_score: bool = True,
     ):
         """Create a DeepLDocumentTranslator component.
@@ -288,27 +288,27 @@ class DeepLDocumentTranslator:
 
         self.api_key: Secret = api_key
         self.max_retries: int = max_retries
-        http_client.max_network_retries = self.max_retries
+        http_client.max_network_retries = self.max_retries  # ty: ignore[invalid-assignment]
         self.client: Translator = Translator(auth_key=str(self.api_key.resolve_value()))
 
-        self.source_lang: Optional[str] = source_lang
-        self.target_lang: Union[str, List[str]] = target_lang
+        self.source_lang: str | None = source_lang
+        self.target_lang: str | list[str] = target_lang
         self.formality: Formality = Formality(formality or Formality.DEFAULT)
         self.preserve_formatting: bool = preserve_formatting
         self.split_sentences: SplitSentences = SplitSentences(
             split_sentences or SplitSentences.DEFAULT
         )
-        self.context: Optional[str] = context
-        self.glossary: Union[str, None] = glossary
+        self.context: str | None = context
+        self.glossary: str | None = glossary
         self.tag_handling: Literal[None, "xml", "html"] = tag_handling
         self.outline_detection: bool = outline_detection
-        self.non_splitting_tags: Union[str, List[str], None] = non_splitting_tags
-        self.splitting_tags: Union[str, List[str], None] = splitting_tags
-        self.ignore_tags: Union[str, List[str], None] = ignore_tags
+        self.non_splitting_tags: str | list[str] | None = non_splitting_tags
+        self.splitting_tags: str | list[str] | None = splitting_tags
+        self.ignore_tags: str | list[str] | None = ignore_tags
         self.include_score: bool = include_score
 
-    @component.output_types(documents=List[Document])
-    def run(self, documents: List[Document], source_lang: Optional[str] = None):
+    @component.output_types(documents=list[Document])
+    def run(self, documents: list[Document], source_lang: str | None = None):
         """Translate a list of Haystack Documents.
 
         Args:
@@ -351,7 +351,7 @@ class DeepLDocumentTranslator:
             )
             assert isinstance(translations, list)
 
-            for document, translation in zip(documents, translations):
+            for document, translation in zip(documents, translations, strict=False):
                 if document.meta.get("language") or document.meta.get("source_lang"):
                     logger.warning(
                         "Document meta already contains language or source_lang. "
@@ -374,7 +374,7 @@ class DeepLDocumentTranslator:
 
         return {"documents": translated_documents}
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Serializes the component to a dictionary.
 
         Returns: Dictionary with serialized data.
@@ -399,7 +399,7 @@ class DeepLDocumentTranslator:
         )
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "DeepLDocumentTranslator":
+    def from_dict(cls, data: dict[str, Any]) -> Self:
         """Deserializes the component from a dictionary.
 
         Args:
