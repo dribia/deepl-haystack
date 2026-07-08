@@ -1,11 +1,13 @@
 """Test cases for DeepL translator components."""
 
+import inspect
 import os
 from typing import Any
 from unittest.mock import patch
 
 import pytest
 from deepl import DeepLException, Formality, SplitSentences, Translator
+from haystack import Pipeline
 from haystack.utils import Secret
 
 from deepl_haystack import DeepLTextTranslator
@@ -210,6 +212,29 @@ class TestDeepLTextTranslator:
             ValueError, match=r"None of the .* environment variables are set"
         ):
             DeepLTextTranslator.from_dict(data)
+
+    def test_pipeline_serialization_roundtrip(self, monkeypatch):
+        """The component survives a pipeline serialization round-trip.
+
+        Haystack 3.x gates pipeline deserialization through a trusted-module
+        allowlist that only covers Haystack's own namespaces, so loading a
+        pipeline that contains a component from this package requires listing
+        it in ``allowed_modules``. Haystack 2.x has no such parameter, so it is
+        only passed when supported.
+        """
+        monkeypatch.setenv("DEEPL_API_KEY", "test-api-key")
+        pipeline = Pipeline()
+        pipeline.add_component("translator", DeepLTextTranslator(target_lang="ES"))
+
+        dumped = pipeline.dumps()
+        if "allowed_modules" in inspect.signature(Pipeline.loads).parameters:
+            loaded = Pipeline.loads(dumped, allowed_modules=["deepl_haystack"])
+        else:
+            loaded = Pipeline.loads(dumped)
+
+        component = loaded.get_component("translator")
+        assert isinstance(component, DeepLTextTranslator)
+        assert component.target_lang == "ES"
 
     def test_run(self, monkeypatch, mock_translation):
         """Test the run method of the DeepLTextTranslator class."""

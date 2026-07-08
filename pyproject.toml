@@ -30,7 +30,7 @@ classifiers = [
 ]
 dependencies = [
     "deepl>=1.19.1,<2",
-    "haystack-ai>=2.0.0,<3",
+    "haystack-ai>=2.0.0,<4",
 ]
 
 [project.urls]
