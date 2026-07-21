@@ -17,4 +17,4 @@ jobs:
       - name: Build
         run: uv build --no-sources
       - name: Publish
-        run: uv publish --token ${{ secrets.POETRY_PYPI_TOKEN_PYPI }}
+        run: uv publish
