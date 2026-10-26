@@ -3,7 +3,7 @@ name = "deepl-haystack"
 version = "0.4.1"
 description = "Haystack integration with DeepL translation services provider."
 authors = [{ name = "Albert Iribarne", email = "iribarne@dribia.com" }]
-requires-python = ">=3.9,<3.14"
+requires-python = ">=3.10,<3.14"
 readme = "README.md"
 license = "MIT"
 maintainers = [
@@ -22,7 +22,6 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -41,10 +40,10 @@ Repository = "https://github.com/dribia/deepl-haystack"
 [dependency-groups]
 dev = ["pre-commit>=4.3.0,<5"]
 ci = [
-    "setuptools>=80.9.0,<83",
+    "setuptools>=84.1.0,<85",
 ]
 test = [
-    "pytest>=8.3.5,<9",
+    "pytest>=9.0.3,<10",
     "pytest-mock>=3.14.1,<4",
     "pytest-cov>=7.0.0,<8",
     "pytest-dotenv>=0.5.2,<0.6",
@@ -66,7 +65,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.ruff]
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.lint]
 select = [

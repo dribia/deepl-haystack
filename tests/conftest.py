@@ -1,7 +1,6 @@
 """Test suite configuration."""
 
 from collections.abc import Iterable
-from typing import Union
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -11,11 +10,11 @@ DEFAULT_SOURCE_LANG = "DE"
 
 
 def translate_text_mock(
-    text: Union[str, Iterable[str]],
+    text: str | Iterable[str],
     *,
-    target_lang: Union[str, Language],
-    source_lang: Union[str, Language, None] = None,
-    formality: Union[str, Formality, None] = None,
+    target_lang: str | Language,
+    source_lang: str | Language | None = None,
+    formality: str | Formality | None = None,
     **kwargs,
 ):
     """Mock the DeepL API translation response.
