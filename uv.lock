@@ -355,7 +355,7 @@ wheels = [
 
 [[package]]
 name = "deepl-haystack"
-version = "0.4.1"
+version = "0.4.2"
 source = { editable = "." }
 default-groups = ["dev", "lint", "test"]
 dependencies = [
