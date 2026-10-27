@@ -581,15 +581,17 @@ wheels = [
 
 [[package]]
 name = "haystack-ai"
-version = "2.21.0"
+version = "3.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
+    { name = "anyio" },
     { name = "docstring-parser" },
     { name = "filetype" },
-    { name = "haystack-experimental" },
+    { name = "httpx" },
     { name = "jinja2" },
     { name = "jsonschema" },
     { name = "lazy-imports" },
+    { name = "markupsafe" },
     { name = "more-itertools" },
     { name = "networkx", version = "3.4.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "networkx", version = "3.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
@@ -600,14 +602,13 @@ dependencies = [
     { name = "pydantic" },
     { name = "python-dateutil" },
     { name = "pyyaml" },
-    { name = "requests" },
     { name = "tenacity" },
     { name = "tqdm" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c3/be/26199a09d9872f89b260ee8ef9ca3838137bdc0b70dac9e52defaa8e4518/haystack_ai-2.21.0.tar.gz", hash = "sha256:ff2a5150a323818143af3649f7ed2def34dcd1c91f5e90c4f3e1a49f2eb275d5", size = 430962, upload-time = "2025-12-08T15:47:41.878Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/6d/b8/89a9afbafad781e85ada3a3c7ce99e2df5eec9447290ac8eee1ce44b96c3/haystack_ai-3.3.0.tar.gz", hash = "sha256:c4376ea13a95fe1e1df3efe383ad7b6af60ae0c971072eb1be53e3b0ccc9d96f", size = 533129, upload-time = "2026-10-01T10:39:37.579Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b7/a0/ffc46df366eb0efdc6c391d542f6aab86b9af9aa169ea27cf0e4268cf67f/haystack_ai-2.21.0-py3-none-any.whl", hash = "sha256:2e2a0a4c29fd2e9638ac364031b684fbfba9b140a68f09b1b82ff01986bb3259", size = 636351, upload-time = "2025-12-08T15:47:43.509Z" },
+    { url = "https://files.pythonhosted.org/packages/51/98/d798624a3a24439c8a2fd9d4c98432095112421d0d16f29855bb1c5f850a/haystack_ai-3.3.0-py3-none-any.whl", hash = "sha256:dc9d6e953babcfd67547159b2758eac42789dc6b0778a8bf3c3e91b576152bc7", size = 737985, upload-time = "2026-10-01T10:39:35.92Z" },
 ]
 
 [[package]]
