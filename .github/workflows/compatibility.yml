@@ -1,0 +1,50 @@
+name: Compatibility
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  compatibility:
+    name: ${{ matrix.name }}
+    strategy:
+      matrix:
+        include:
+          - name: lowest-direct
+            python-version: "3.10"
+            resolution: lowest-direct
+            haystack: "haystack-ai>=2.0.0,<3"
+          - name: highest-haystack-2
+            python-version: "3.14"
+            resolution: highest
+            haystack: "haystack-ai>=2.0.0,<3"
+          - name: highest-haystack-3
+            python-version: "3.14"
+            resolution: highest
+            haystack: "haystack-ai>=3.0.0,<4"
+      fail-fast: false
+    runs-on: ubuntu-latest
+    env:
+      HAYSTACK_TELEMETRY_ENABLED: "False"
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          enable-cache: false
+      - name: Install Dependencies
+        run: |
+          uv venv --python ${{ matrix.python-version }}
+          uv pip install --resolution ${{ matrix.resolution }} -e . --group test "${{ matrix.haystack }}"
+          uv pip list | grep -E "^(deepl|haystack-ai) "
+      - name: Test
+        run: uv run --no-sync pytest -m "not integration"
