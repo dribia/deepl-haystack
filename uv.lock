@@ -537,15 +537,17 @@ wheels = [
 
 [[package]]
 name = "haystack-ai"
-version = "2.21.0"
+version = "3.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
+    { name = "anyio" },
     { name = "docstring-parser" },
     { name = "filetype" },
-    { name = "haystack-experimental" },
+    { name = "httpx" },
     { name = "jinja2" },
     { name = "jsonschema" },
     { name = "lazy-imports" },
+    { name = "markupsafe" },
     { name = "more-itertools" },
     { name = "networkx", version = "3.4.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "networkx", version = "3.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
@@ -556,26 +558,26 @@ dependencies = [
     { name = "pydantic" },
     { name = "python-dateutil" },
     { name = "pyyaml" },
-    { name = "requests" },
     { name = "tenacity" },
     { name = "tqdm" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c3/be/26199a09d9872f89b260ee8ef9ca3838137bdc0b70dac9e52defaa8e4518/haystack_ai-2.21.0.tar.gz", hash = "sha256:ff2a5150a323818143af3649f7ed2def34dcd1c91f5e90c4f3e1a49f2eb275d5", size = 430962, upload-time = "2025-12-08T15:47:41.878Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/6d/b8/89a9afbafad781e85ada3a3c7ce99e2df5eec9447290ac8eee1ce44b96c3/haystack_ai-3.3.0.tar.gz", hash = "sha256:c4376ea13a95fe1e1df3efe383ad7b6af60ae0c971072eb1be53e3b0ccc9d96f", size = 533129, upload-time = "2026-10-01T10:39:37.579Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b7/a0/ffc46df366eb0efdc6c391d542f6aab86b9af9aa169ea27cf0e4268cf67f/haystack_ai-2.21.0-py3-none-any.whl", hash = "sha256:2e2a0a4c29fd2e9638ac364031b684fbfba9b140a68f09b1b82ff01986bb3259", size = 636351, upload-time = "2025-12-08T15:47:43.509Z" },
+    { url = "https://files.pythonhosted.org/packages/51/98/d798624a3a24439c8a2fd9d4c98432095112421d0d16f29855bb1c5f850a/haystack_ai-3.3.0-py3-none-any.whl", hash = "sha256:dc9d6e953babcfd67547159b2758eac42789dc6b0778a8bf3c3e91b576152bc7", size = 737985, upload-time = "2026-10-01T10:39:35.92Z" },
 ]
 
 [[package]]
-name = "haystack-experimental"
-version = "0.19.0.post1"
+name = "httpcore"
+version = "1.0.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "haystack-ai" },
+    { name = "certifi" },
+    { name = "h11" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a5/92/747d8955f3d6558a16d5b113814a074c05f04e1f6b2a1a1748028bc65032/haystack_experimental-0.19.0.post1.tar.gz", hash = "sha256:898a6974567655b345d0088900bbb6ac539124faec6e209d37307ee7aa6ec652", size = 45003, upload-time = "2026-07-28T14:57:20.257Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/06/94/82699a10bca87a5556c9c59b5963f2d039dbd239f25bc2a63907a05a14cb/httpcore-1.0.9.tar.gz", hash = "sha256:6e34463af53fd2ab5d807f399a9b45ea31c3dfa2276f15a2c3f00afff6e176e8", size = 85484, upload-time = "2025-04-24T22:06:22.219Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/98/b5/2bc81bbfbfa83ed8a7d123ddc079e1c0ac52a5b6cfd3876bd6ba579cf313/haystack_experimental-0.19.0.post1-py3-none-any.whl", hash = "sha256:b2d0a9548ff3a16de0138cbfc8dccd94a81eeec1315cc9f3fe304808a138610f", size = 62552, upload-time = "2026-07-28T14:57:18.706Z" },
+    { url = "https://files.pythonhosted.org/packages/7e/f5/f66802a942d491edb555dd61e3a9961140fd64c90bce1eafd741609d334d/httpcore-1.0.9-py3-none-any.whl", hash = "sha256:2d400746a40668fc9dec9810239072b40b4484b640a8c38fd654a024c7a1bf55", size = 78784, upload-time = "2025-04-24T22:06:20.566Z" },
 ]
 
 [[package]]
@@ -609,6 +611,21 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/c0/61/afa9d6b7452f9eca73f73d45324eb0bb52f098fd5e6049bf6b8263be9b4e/httpcore2-2.16.0.tar.gz", hash = "sha256:c72cd0413563b17e1cd8354677dff887466f8ec2551679759e93126534428643", size = 69886, upload-time = "2026-10-21T07:09:45.31Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/af/c2/ce417c397afa5181f0e3c6ff01a4d01639414e1adef08730d97571297151/httpcore2-2.16.0-py3-none-any.whl", hash = "sha256:5c4358319f2602d984ad93182c9fee5160f22e9da7babdda870a5e7c4e2dc34f", size = 85070, upload-time = "2026-10-21T07:09:42.802Z" },
+]
+
+[[package]]
+name = "httpx"
+version = "0.28.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "anyio" },
+    { name = "certifi" },
+    { name = "httpcore" },
+    { name = "idna" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b1/df/48c586a5fe32a0f01324ee087459e112ebb7224f646c0b5023f5e79e9956/httpx-0.28.1.tar.gz", hash = "sha256:75e98c5f16b0f35b567856f597f06ff2270a374470a5c2392242528e3e3e42fc", size = 141406, upload-time = "2024-12-06T15:37:23.222Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2a/39/e50c7c3a983047577ee07d2a9e53faf5a69493943ec3f6a384bdc792deb2/httpx-0.28.1-py3-none-any.whl", hash = "sha256:d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad", size = 73517, upload-time = "2024-12-06T15:37:21.509Z" },
 ]
 
 [[package]]
