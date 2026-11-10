@@ -95,7 +95,7 @@ class DeepLTextTranslator:
 
         self.api_key: Secret = api_key
         self.max_retries: int = max_retries
-        http_client.max_network_retries = self.max_retries
+        http_client.max_retries = self.max_retries
         self.client: Translator = Translator(auth_key=str(self.api_key.resolve_value()))
 
         self.source_lang: str | None = source_lang
@@ -288,7 +288,7 @@ class DeepLDocumentTranslator:
 
         self.api_key: Secret = api_key
         self.max_retries: int = max_retries
-        http_client.max_network_retries = self.max_retries
+        http_client.max_retries = self.max_retries
         self.client: Translator = Translator(auth_key=str(self.api_key.resolve_value()))
 
         self.source_lang: str | None = source_lang
