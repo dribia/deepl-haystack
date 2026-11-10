@@ -3,11 +3,10 @@
 from typing import Any, Dict, List, Literal
 
 from deepl import (
+    DeepLClient,
     Formality,
     SplitSentences,
     TextResult,
-    Translator,
-    http_client,
 )
 from haystack import Document, component, default_from_dict, default_to_dict, logging
 from haystack.utils import Secret, deserialize_secrets_inplace
@@ -95,8 +94,9 @@ class DeepLTextTranslator:
 
         self.api_key: Secret = api_key
         self.max_retries: int = max_retries
-        http_client.max_network_retries = self.max_retries
-        self.client: Translator = Translator(auth_key=str(self.api_key.resolve_value()))
+        self.client: DeepLClient = DeepLClient(
+            auth_key=str(self.api_key.resolve_value()), max_retries=self.max_retries
+        )
 
         self.source_lang: str | None = source_lang
         self.target_lang: str = target_lang
@@ -288,8 +288,9 @@ class DeepLDocumentTranslator:
 
         self.api_key: Secret = api_key
         self.max_retries: int = max_retries
-        http_client.max_network_retries = self.max_retries
-        self.client: Translator = Translator(auth_key=str(self.api_key.resolve_value()))
+        self.client: DeepLClient = DeepLClient(
+            auth_key=str(self.api_key.resolve_value()), max_retries=self.max_retries
+        )
 
         self.source_lang: str | None = source_lang
         self.target_lang: str | List[str] = target_lang
