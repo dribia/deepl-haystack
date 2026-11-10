@@ -469,7 +469,7 @@ test = [
 
 [package.metadata]
 requires-dist = [
-    { name = "deepl", specifier = ">=1.19.1,<2" },
+    { name = "deepl", specifier = ">=1.33.0,<2" },
     { name = "haystack-ai", specifier = ">=2.0.0,<4" },
 ]
 
