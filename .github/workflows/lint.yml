@@ -20,6 +20,8 @@ jobs:
           python-version: '3.12'
           enable-cache: true
       - name: Install Dependencies
-        run: uv sync --no-default-groups --group ci --group lint
+        run: uv sync --no-default-groups --group ci --group lint --group dev
       - name: Lint
         run: make lint
+      - name: Pre-commit hooks
+        run: uv run prek run --all-files
