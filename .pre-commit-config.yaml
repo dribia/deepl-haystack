@@ -22,7 +22,7 @@ repos:
   - id: uv-sync
     args: ["--locked", "--all-packages"]
 - repo: https://github.com/dribia/sync-with-uv
-  rev: v0.1.1
+  rev: v0.1.5
   hooks:
   - id: sync-with-uv
 - repo: https://github.com/python-jsonschema/check-jsonschema
@@ -34,7 +34,7 @@ repos:
   hooks:
   - id: checkmake
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.17.4
+  rev: v0.17.6
   hooks:
   - id: ruff-check
     types_or: [ python, pyi ]
